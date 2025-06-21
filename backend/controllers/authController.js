@@ -98,6 +98,10 @@ exports.verifyToken = (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true, // must match cookie settings during login
+    sameSite: "None", // must match
+  });
   res.status(200).json({ message: "Logged out" });
 };
