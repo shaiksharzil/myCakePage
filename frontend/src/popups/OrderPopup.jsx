@@ -23,20 +23,14 @@ const OrderPopup = ({ cake, quantity, flavour, price, mobileNo, onClose }) => {
 
   const handleOrder = () => {
     if (!deliveryDate || !deliveryTime) {
-      toast.error("Please fill in the required fields.", {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
+      toast.error("Please fill in the required fields.");
       return;
     }
     if (message) {
-      messOnCake=`🎁 Message on Cake: ${message}`;
+      messOnCake = `🎁 Message on Cake: ${message}`;
     }
     if (specialRequests) {
-      specReq=`✨ Special Requests: ${specialRequests}`;
+      specReq = `✨ Special Requests: ${specialRequests}`;
     }
     toast.promise(
       new Promise((resolve) => {
@@ -71,7 +65,8 @@ Please confirm my order. Thank you! 😊
         loading: "Preparing your order...",
         success: "Redirecting to WhatsApp...",
         error: "Something went wrong!",
-      },{
+      },
+      {
         style: {
           borderRadius: "10px",
           background: "#333",

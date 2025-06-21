@@ -10,7 +10,6 @@ import EditFlavoursPopUp from "../popups/EditFlavoursPopUp";
 import FlavourCardSkeletonLoader from "../loaders/FlavourCardSkeletonLoader";
 import NoCakeFlavours from "../components/NoCakeFlavours";
 
-
 const FlavoursPage = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [flavours, setFlavours] = useState([]);
@@ -20,8 +19,6 @@ const FlavoursPage = () => {
   const [flavourToEdit, setFlavourToEdit] = useState(null);
   const [loading, setLoading] = useState(true);
   const Url = import.meta.env.VITE_URL;
-
-  
 
   const handleDeleteClick = (flavour) => {
     setFlavourToDelete(flavour);
@@ -33,7 +30,6 @@ const FlavoursPage = () => {
     setShowEditPopup(true);
   };
 
-  
   const handleUpdate = async (updatedFlavour) => {
     const { _id, name, pricePerKg } = updatedFlavour;
 
@@ -41,13 +37,7 @@ const FlavoursPage = () => {
     const price = parseFloat(pricePerKg);
 
     if (!trimmedName || isNaN(price) || price <= 0) {
-      return toast.error("Please enter a valid name and price.", {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
+      return toast.error("Please enter a valid name and price.");
     }
     try {
       const res = await toast.promise(
@@ -75,8 +65,6 @@ const FlavoursPage = () => {
       console.error("Update error:", err);
     }
   };
-  
-  
 
   const fetchFlavours = async () => {
     try {
@@ -84,7 +72,7 @@ const FlavoursPage = () => {
         withCredentials: true,
       });
       setFlavours(res.data);
-      console.log(res.data)
+      console.log(res.data);
     } catch (err) {
       toast.error("Failed to load flavours");
     } finally {
@@ -100,13 +88,7 @@ const FlavoursPage = () => {
 
     // Validation
     if (!trimmedName || isNaN(price) || price <= 0) {
-      return toast.error("Please enter a valid flavour name and price.", {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
+      return toast.error("Please enter a valid flavour name and price.");
     }
     try {
       const res = await toast.promise(
@@ -134,16 +116,16 @@ const FlavoursPage = () => {
       console.error("Flavour create error:", err);
     }
   };
-  
 
   const handleDelete = async (id) => {
-    if (!id) return toast.error("Invalid flavour ID", {
-      style: {
-        borderRadius: "10px",
-        background: "#333",
-        color: "#fff",
-      },
-    });
+    if (!id)
+      return toast.error("Invalid flavour ID", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
 
     try {
       await toast.promise(
@@ -169,7 +151,6 @@ const FlavoursPage = () => {
       console.error("Delete error:", err);
     }
   };
-  
 
   useEffect(() => {
     fetchFlavours();

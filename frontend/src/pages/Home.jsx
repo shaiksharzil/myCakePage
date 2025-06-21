@@ -29,13 +29,7 @@ const Home = () => {
 
     const mobileRegex = /^[6-9]\d{9}$/;
     if (!mobileRegex.test(data.mobile)) {
-      toast.error("Enter a valid 10-digit mobile number", {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
+      toast.error("Enter a valid 10-digit mobile number");
       button.classList.remove("active");
       setIsSending(false);
       return;
@@ -53,24 +47,14 @@ const Home = () => {
     };
 
     toast
-      .promise(
-        sendEmail(),
-        {
-          loading: "Sending your message...",
-          success: () => {
-            form.reset();
-            return <b>Message sent successfully!</b>;
-          },
-          error: <b>Failed to send message. Try again.</b>,
+      .promise(sendEmail(), {
+        loading: "Sending your message...",
+        success: () => {
+          form.reset();
+          return <b>Message sent successfully!</b>;
         },
-        {
-          style: {
-            borderRadius: "10px",
-            background: "#333",
-            color: "#fff",
-          },
-        }
-      )
+        error: <b>Failed to send message. Try again.</b>,
+      })
       .finally(() => {
         button.classList.remove("active");
         setIsSending(false);
@@ -120,10 +104,10 @@ const Home = () => {
             </span>
           </h1>
           <p className="text-lg md:text-xl text-white/70 mb-8">
-            A next-gen cake gallery where bakers showcase stunning designs in
-            personalized portfolios. Customers can easily browse, filter by
-            flavors or themes, and connect with their favorite bakers in just a
-            few clicks.
+            A smart and stunning digital cake gallery for bakers to beautifully
+            showcase their creations, flavors, and prices—all in one
+            personalized page. Customers can explore, filter, and order cakes
+            directly via WhatsApp.
           </p>
           <div className="">
             <input
@@ -131,33 +115,24 @@ const Home = () => {
               placeholder="mycakepage/"
               onChange={(e) => {
                 const value = e.target.value.toLowerCase();
-                // setCustomURL(value);
                 const error = validateCustomUrl(value);
                 setUrlError(error);
                 if (!error) checkUrlAvailability(value);
               }}
-              className="bg-white/10 text-white/70 px-3  max-md:px-0 py-2 rounded outline-none border border-white/10"
+              className="bg-white/10 text-white/70 px-3  max-md:pl-3 py-2 rounded outline-none border border-white/10"
             />
             <Link
               to={"/signup"}
-              className=" py-3 px-2 ml-2 bg-white max-md:px-1 hover:text-white rounded-md shimmer text-white/70 border border-white/10 font-bold cursor-pointer"
+              className=" py-3 px-2 ml-2 bg-white hover:bg-black border border-white max-md:px-1 hover:text-white rounded-md text-black font-bold cursor-pointer"
             >
-              Claim your CakePage
+              Get your CakePage
             </Link>
-            {urlError && (
-              <p className="text-sm  text-red-400">
-                {urlError}
-              </p>
-            )}
+            {urlError && <p className="text-sm  text-red-400">{urlError}</p>}
             {!urlError && urlAvailable === false && (
-              <p className="text-sm text-red-400">
-                URL already taken
-              </p>
+              <p className="text-sm text-red-400">URL already taken</p>
             )}
             {!urlError && urlAvailable === true && (
-              <p className="text-sm text-emerald-400">
-                URL is available!
-              </p>
+              <p className="text-sm text-emerald-400">URL is available!</p>
             )}
           </div>
           <Tilt
@@ -172,8 +147,8 @@ const Home = () => {
               Start Your Cake Journey
             </h3>
             <p className="text-sm text-white/70 mb-4 text-center">
-              Create, share, and celebrate your cake artistry with a unique
-              CakePage URL.
+              Create your very own CakePage URL for customers to explore your
+              cake designs, pricing, and bakery details.
             </p>
             <div className="flex justify-center">
               <Link
@@ -202,8 +177,8 @@ const Home = () => {
       </section>
       <section className="px-6 pt-20 max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0}}
-          whileInView={{ opacity: 1}}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}
           viewport={{ once: true }}
         >
@@ -211,71 +186,52 @@ const Home = () => {
             Why Choose <span style={{ fontFamily: "Alagen" }}>MyCakePage?</span>
           </h2>
           <div className="grid md:grid-cols-2 gap-10">
-            <Tilt
-              tiltMaxAngleX={-5}
-              tiltMaxAngleY={-5}
-              glareEnable={true}
-              glareMaxOpacity={0.1}
-              transitionSpeed={1000}
-              className="p-6 hover:scale-105 shimmer rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20"
-            >
+            <div className="p-6 hover:rotate-2 rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20">
               <h3 className="text-xl font-semibold mb-2">For Bakers</h3>
-              <p className="text-white/70">
-                Showcase your baking talent with a professional digital
-                portfolio. Effortlessly upload and categorize your cake designs
-                by type, flavor, and theme. Share your personalized CakePage URL
-                with customers to receive direct inquiries and build your brand
-                online.
-              </p>
-            </Tilt>
-            <Tilt
-              tiltMaxAngleX={-5}
-              tiltMaxAngleY={-5}
-              glareEnable={true}
-              glareMaxOpacity={0.1}
-              transitionSpeed={1000}
-              className="p-6 hover:scale-105 shimmer rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20"
-            >
+              <ul className="list-disc list-inside max-sm:text-xs text-white/70 space-y-1">
+                <li>Showcase categorized cake designs with images</li>
+                <li>Set dynamic pricing per kg and per flavor</li>
+                <li>Attach available flavors to each cake</li>
+                <li>Set minimum order quantity (e.g. 0.5kg or 1kg)</li>
+                <li>Share your unique CakePage URL with clients</li>
+                <li>Receive direct WhatsApp orders</li>
+                <li>Use QR codes to promote your CakePage</li>
+              </ul>
+            </div>
+
+            <div className="p-6 hover:rotate-2 rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20">
               <h3 className="text-xl font-semibold mb-2">For Customers</h3>
-              <p className="text-white/70">
-                Discover delicious cakes from local bakers. Explore a wide range
-                of categories and flavors, view prices, and place orders—all
-                from the convenience of the baker's unique CakePage. Get
-                inspired and find the perfect cake for any celebration.
-              </p>
-            </Tilt>
-            <Tilt
-              tiltMaxAngleX={-5}
-              tiltMaxAngleY={-5}
-              glareEnable={true}
-              glareMaxOpacity={0.1}
-              transitionSpeed={1000}
-              className="p-6 hover:scale-105 rounded-2xl shimmer bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20"
-            >
+              <ul className="list-disc list-inside max-sm:text-xs text-white/70 space-y-1">
+                <li>Browse beautiful cakes by category or flavor</li>
+                <li>Filter cakes by price, quantity, or flavor</li>
+                <li>View dynamic pricing per cake and per kg</li>
+                <li>Fill custom order form with delivery details</li>
+                <li>Include optional message or cake notes</li>
+                <li>Order instantly via WhatsApp</li>
+              </ul>
+            </div>
+
+            <div className="p-6 hover:rotate-2 rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20">
               <h3 className="text-xl font-semibold mb-2">Smart Admin Panel</h3>
-              <p className="text-white/70">
-                Easily manage your cake catalog with our smart admin panel.
-                Upload high-quality images directly to Cloudinary, organize your
-                listings, track customer views and engagement, and make updates
-                on the go. Save time and stay in control.
-              </p>
-            </Tilt>
-            <Tilt
-              tiltMaxAngleX={-5}
-              tiltMaxAngleY={-5}
-              glareEnable={true}
-              glareMaxOpacity={0.1}
-              transitionSpeed={1000}
-              className="p-6 hover:scale-105 rounded-2xl shimmer bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20"
-            >
+              <ul className="list-disc list-inside max-sm:text-xs text-white/70 space-y-1">
+                <li>Upload cakes and images via Cloudinary</li>
+                <li>Manage cake categories and flavors</li>
+                <li>Edit prices, descriptions, and stock on the go</li>
+                <li>Preview your CakePage in real-time</li>
+                <li>Track customer views and engagement</li>
+              </ul>
+            </div>
+
+            <div className="p-6 hover:rotate-2 rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20">
               <h3 className="text-xl font-semibold mb-2">Join the Community</h3>
-              <p className="text-white/70">
-                Join a vibrant and growing network of bakers and dessert lovers.
-                Whether you're a home baker, professional, or simply someone who
-                loves cake, there's a place for you here. Sign up today and turn
-                your passion into opportunity.
-              </p>
-            </Tilt>
+              <ul className="list-disc list-inside max-sm:text-xs text-white/70 space-y-1">
+                <li>Perfect for home bakers and professionals</li>
+                <li>Build your digital presence with ease</li>
+                <li>Get discovered by cake lovers near you</li>
+                <li>Turn your creativity into a cake business</li>
+                <li>Be part of a growing cake-loving community</li>
+              </ul>
+            </div>
           </div>
         </motion.div>
       </section>
@@ -296,33 +252,28 @@ const Home = () => {
               {
                 title: "1. Sign Up",
                 description:
-                  "Create your free account in seconds and become part of the MyCakePage community. Whether you're a professional baker or a passionate hobbyist, you're welcome here!",
+                  "Create your free account and enter your bakery name, address, and WhatsApp number.",
               },
               {
                 title: "2. Build Your CakePage",
                 description:
-                  "Upload beautiful cake designs, categorize them by flavor or event type, and customize your CakePage with a unique link that reflects your brand.",
+                  "Upload cake designs, set prices and flavors, categorize your cakes, and personalize your CakePage with a custom URL.",
               },
               {
                 title: "3. Share & Grow",
                 description:
-                  "Promote your custom CakePage URL across social platforms, receive direct customer inquiries, track views, and watch your baking business thrive.",
+                  "Promote your CakePage link and QR code. Let customers explore your cakes, filter by their needs, and order directly via WhatsApp.",
               },
             ].map((step, index) => (
-              <Tilt
-                tiltMaxAngleX={-5}
-                tiltMaxAngleY={-5}
-                glareEnable={true}
-                glareMaxOpacity={0.1}
-                transitionSpeed={1000}
+              <div
                 key={index}
-                className="glass p-6 rounded-xl shimmer text-center bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20"
+                className="glass p-6 rounded-xl text-center bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20"
               >
                 <h3 className="text-xl font-bold text-white mb-2">
                   {step.title}
                 </h3>
                 <p className="text-sm text-gray-300">{step.description}</p>
-              </Tilt>
+              </div>
             ))}
           </div>
         </motion.div>
@@ -338,27 +289,27 @@ const Home = () => {
               name="name"
               required
               placeholder="Your Name"
-              className="w-full p-3 rounded-xl bg-white/10 shimmer  text-white/70 outline-none border border-white/10"
+              className="w-full p-3 rounded-xl bg-white/10  text-white/70 outline-none border border-white/10"
             />
             <input
               type="email"
               name="email"
               required
               placeholder="Email"
-              className="w-full p-3 rounded-xl bg-white/10 shimmer text-white/70 outline-none border border-white/10"
+              className="w-full p-3 rounded-xl bg-white/10 text-white/70 outline-none border border-white/10"
             />
             <input
               type="mobile"
               name="mobile"
               required
               placeholder="Phone no"
-              className="w-full p-3 rounded-xl bg-white/10 shimmer text-white/70 outline-none border border-white/10"
+              className="w-full p-3 rounded-xl bg-white/10 text-white/70 outline-none border border-white/10"
             />
             <textarea
               placeholder="Your Message"
               name="message"
               required
-              className="w-full p-3 rounded-xl resize-none shimmer bg-white/10  text-white/70 outline-none border border-white/10"
+              className="w-full p-3 rounded-xl resize-none bg-white/10  text-white/70 outline-none border border-white/10"
               rows={4}
             />
             <button

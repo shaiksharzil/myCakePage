@@ -123,13 +123,9 @@ const Nav = () => {
             MyCakePage
           </span>
         </Link>
-
-        {/* Desktop links */}
         <div className="hidden md:flex items-center gap-6 text-white/70 text-xl font-medium">
           {renderLinks(false)}
         </div>
-
-        {/* Mobile Hamburger */}
         <div className="relative md:hidden">
           <Menu isOpen={open} onToggle={toggleMenu} />
           <AnimatePresence>
@@ -138,11 +134,6 @@ const Nav = () => {
                 initial={{ opacity: 0, x: 100 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 100 }}
-                transition={{
-                  delay: 0.5,
-                  duration: 0.5,
-                  ease: "easeInOut",
-                }}
                 className="absolute w-40 right-0 mt-5 bg-black border border-white/20 shadow-lg rounded-xl px-6 py-3 flex flex-col items-start gap-y-3 font-medium text-white/60 text-lg"
               >
                 {renderLinks(true)}

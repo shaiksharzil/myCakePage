@@ -24,13 +24,7 @@ const Profile = () => {
         setCategories(res.data.categories);
       })
       .catch((err) => {
-        toast.error("Failed to load profile", {
-          style: {
-            borderRadius: "10px",
-            background: "#333",
-            color: "#fff",
-          },
-        });
+        toast.error("Failed to load profile");
       })
       .finally(() => setLoading(false));
   }, [customUrl]);

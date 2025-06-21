@@ -4,7 +4,7 @@ import Tilt from "react-parallax-tilt";
 import { Link } from "react-router-dom";
 import CopySvg from "../icons/CopySvg";
 import { useNavigate } from "react-router-dom";
-import ShareIcon from '../icons/ShareIcon';
+import ShareIcon from "../icons/ShareIcon";
 import EditIcon from "../icons/EditIcons";
 import toast from "react-hot-toast";
 import SkeletonPublicProfileCard from "../loaders/SkeletonPublicProfileCard";
@@ -16,11 +16,10 @@ const ProfileCard = ({ setShowQrPopup, setCustomUrl, setProfileData }) => {
   const [loading, setLoading] = useState(true);
   const Url = import.meta.env.VITE_URL;
 
-
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get( `${Url}/api/profile/me`, {
+        const res = await axios.get(`${Url}/api/profile/me`, {
           withCredentials: true,
         });
         setData(res.data);
@@ -31,13 +30,12 @@ const ProfileCard = ({ setShowQrPopup, setCustomUrl, setProfileData }) => {
           // console.error("Error fetching profile:", err);
         }
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
     fetchProfile();
   }, []);
-  
 
   const handleShare = async () => {
     const url = `https://mycakepage.vercel.app/${user.customUrl}`;
@@ -47,35 +45,19 @@ const ProfileCard = ({ setShowQrPopup, setCustomUrl, setProfileData }) => {
         await navigator.share({
           title: `${profile.bakeryName} | MyCakePage`,
           text: message,
-          url,
         });
       } else {
         await navigator.clipboard.writeText(message);
-        toast.success("Link copied to clipboard!", {
-          style: {
-            borderRadius: "10px",
-            background: "#333",
-            color: "#fff",
-          },
-        });
+        toast.success("Link copied to clipboard!");
       }
     } catch (error) {
       console.error("Error sharing:", error);
-      toast.error("Unable to share this page.", {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
+      toast.error("Unable to share this page.");
     }
   };
-  
-  
 
   if (loading) return <SkeletonPublicProfileCard />;
   if (!data) return null;
-  
 
   const { user, profile } = data;
 
@@ -117,22 +99,26 @@ const ProfileCard = ({ setShowQrPopup, setCustomUrl, setProfileData }) => {
           <h4 className="text-center text-xl font-bold text-white/80">
             {profile.bakeryName}
           </h4>
-          <a
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-              profile.bakeryName + profile.address
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-center px-2 text-sm my-1 cursor-pointer block  text-white/80"
-          >
-            <i className="ri-map-pin-line mr-1"></i> {profile.address}
-          </a>
-          <a
-            href={`tel:+91${profile.mobile}`}
-            className="text-center text-sm cursor-pointer block text-white/80"
-          >
-            <i className="ri-phone-line mr-1"></i> +91 {profile.mobile}
-          </a>
+          <div className="flex items-center justify-center">
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                profile.bakeryName + profile.address
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className=" px-2 text-sm my-1 cursor-pointer block  text-white/80"
+            >
+              <i className="ri-map-pin-line mr-1"></i> {profile.address}
+            </a>
+          </div>
+          <div className="flex items-center justify-center">
+            <a
+              href={`tel:+91${profile.mobile}`}
+              className="text-sm cursor-pointer block text-white/80"
+            >
+              <i className="ri-phone-line mr-1"></i> +91 {profile.mobile}
+            </a>
+          </div>
           <div className="flex items-center justify-center m-2">
             <p className="border border-white/10 bg-white/10 text-white/70 py-1 px-2 rounded-l-md text-ellipsis max-w-[70%] truncate">
               https://mycakepage.vercel.app/{user.customUrl}

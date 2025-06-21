@@ -12,7 +12,6 @@ import toast from "react-hot-toast";
 import CakeCategorySkeletonLoader from "../loaders/CakeCategorySkeletonLoader";
 import NoCakeCategories from "../components/NoCakeCategories";
 
-
 const Admin = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
@@ -23,7 +22,6 @@ const Admin = () => {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const Url = import.meta.env.VITE_URL;
-
 
   const fetchCategories = async () => {
     try {
@@ -55,13 +53,6 @@ const Admin = () => {
           loading: `Deleting category...`,
           success: `Category deleted successfully!`,
           error: "Failed to delete category.",
-        },
-        {
-          style: {
-            borderRadius: "10px",
-            background: "#333",
-            color: "#fff",
-          },
         }
       );
       setCategories((prev) => prev.filter((cat) => cat._id !== catId));
@@ -69,7 +60,7 @@ const Admin = () => {
       // console.error("Failed to delete category:", err);
     }
   };
-  
+
   const handleNewCategory = (newCategory) => {
     setCategories((prev) => [...prev, newCategory]);
   };

@@ -14,13 +14,7 @@ const EditFlavoursPopUp = ({ setShowPopup, onUpdate, flavour }) => {
 
   const handleUpdate = () => {
     if (!flavourName || !price) {
-      toast.error("Please fill out all fields", {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
+      toast.error("Please fill out all fields");
       return;
     }
     onUpdate({ ...flavour, name: flavourName, pricePerKg: parseFloat(price) });

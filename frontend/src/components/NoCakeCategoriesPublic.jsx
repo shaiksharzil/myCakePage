@@ -14,7 +14,7 @@ const NoCakeCategoriesPublic = () => {
       >
         <div className="bg-white/10 border border-white/10 shadow-lg backdrop-filter backdrop-blur-md rounded-2xl px-4 py-6 max-w-md mx-4 text-center">
           <h1 className="text-white text-3xl font-bold max-md:text-2xl">
-            No Categories Available!
+            No Cakes Available!
           </h1>
           <p className="text-white/70 mt-3 max-md:text-sm">
             It looks like this bakery hasn't added any cake categories yet.

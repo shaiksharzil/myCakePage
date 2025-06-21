@@ -25,7 +25,6 @@
     "react-hot-toast": "^2.5.2",
     "react-parallax-tilt": "^1.7.296",
     "react-router-dom": "^7.6.2",
-    "react-tooltip": "^5.29.1",
     "react-useanimations": "^2.10.0",
     "tailwindcss": "^4.1.8"
   },

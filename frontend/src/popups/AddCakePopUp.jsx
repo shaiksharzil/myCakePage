@@ -23,23 +23,11 @@ const AddCakePopUp = ({ setShowPopup, onCreate, categoryId }) => {
         });
         setFlavours(res.data);
         if (res.data.length === 0) {
-          toast.error("Please add flavours before adding a cake.", {
-            style: {
-              borderRadius: "10px",
-              background: "#333",
-              color: "#fff",
-            },
-          });
+          toast.error("Please add flavours before adding a cake.");
           navigate("/flavours");
         }
       } catch (err) {
-        toast.error("Failed to load flavours", {
-          style: {
-            borderRadius: "10px",
-            background: "#333",
-            color: "#fff",
-          },
-        });
+        toast.error("Failed to load flavours");
       }
     };
     fetchFlavours();
@@ -51,13 +39,7 @@ const AddCakePopUp = ({ setShowPopup, onCreate, categoryId }) => {
       setImageFile(file);
       setPreview(URL.createObjectURL(file));
     } else {
-      toast.error("File must be under 1MB", {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
+      toast.error("File must be under 1MB");
     }
   };
 
@@ -72,43 +54,19 @@ const AddCakePopUp = ({ setShowPopup, onCreate, categoryId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!imageFile || !minQty) {
-      toast.error("Image and Minimum Order Quantity are required.", {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
+      toast.error("Image and Minimum Order Quantity are required.");
       return;
     }
-    if (minQty<=0) {
-      toast.error("Minimum order quantity must be greater than 0 kg.", {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
+    if (minQty <= 0) {
+      toast.error("Minimum order quantity must be greater than 0 kg.");
       return;
     }
     if (extraPrice <= 0) {
-      toast.error("Extra price must be greater than ₹0/-.", {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
+      toast.error("Extra price must be greater than ₹0/-.");
       return;
     }
     if (selectedFlavours.length === 0) {
-      toast.error("Please select at least one flavour.", {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
+      toast.error("Please select at least one flavour.");
       return;
     }
 

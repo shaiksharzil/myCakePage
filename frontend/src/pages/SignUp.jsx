@@ -5,8 +5,7 @@ import Tilt from "react-parallax-tilt";
 import toast, { Toaster } from "react-hot-toast";
 import { debounce } from "lodash";
 import { useAuth } from "../context/AuthContext";
-import Eyes from '../icons/Eyes';
-
+import Eyes from "../icons/Eyes";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -23,18 +22,11 @@ const Signup = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const Url = import.meta.env.VITE_URL;
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validatePassword(password) || validateCustomUrl(customURL)) {
-      toast.error("Please fix errors before submitting", {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
+      toast.error("Please fix errors before submitting");
       return;
     }
     setIsSubmitting(true);
@@ -58,13 +50,6 @@ const Signup = () => {
           success: (res) => res.data.message || "Signup successful",
           error: (err) =>
             err?.response?.data?.message || "Signup failed. Try again.",
-        },
-        {
-          style: {
-            borderRadius: "10px",
-            background: "#333",
-            color: "#fff",
-          },
         }
       );
 
@@ -76,7 +61,6 @@ const Signup = () => {
       setIsSubmitting(false);
     }
   };
-  
 
   const checkUrlAvailability = debounce(async (value) => {
     if (!value) return;
@@ -93,7 +77,6 @@ const Signup = () => {
   const togglePasswordVisibility = () => {
     setPassType(passType === "password" ? "text" : "password");
   };
-
 
   const validatePassword = (value) => {
     const hasUppercase = /[A-Z]/.test(value);
@@ -131,11 +114,7 @@ const Signup = () => {
       >
         <div className="p-3 bg-white/10 border border-white/10 shadow-lg backdrop-filter backdrop-blur-md rounded-xl w-86">
           <h2 className="font-bold text-2xl text-center text-white/80">
-            Welcome to{" "}
-            <span style={{ fontFamily: "Alagen" }}>
-              {" "}
-              MyCakePage
-            </span>
+            Welcome to <span style={{ fontFamily: "Alagen" }}> MyCakePage</span>
           </h2>
           <p className="text-white/70 text-sm pb-1">
             Enter your details below to create an account

@@ -17,7 +17,6 @@ import CustomUrlWrapper from "./components/CustomUrlWrapper";
 import { ProfileProvider } from "./context/ProfileContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
-import { Tooltip } from "react-tooltip";
 import Loader from './loaders/Loader';
 
 const App = () => {
@@ -36,8 +35,16 @@ const App = () => {
         <Router>
           <div className="flex flex-col min-h-screen bg-black text-white">
             <Nav />
-            <Toaster position="top-center" />
-            <Tooltip id="my-tooltip" />
+            <Toaster
+              position="top-center"
+              toastOptions={{
+                style: {
+                  borderRadius: "10px",
+                  background: "#333",
+                  color: "#fff",
+                },
+              }}
+            />
             <div className="flex-1">
               <Routes>
                 <Route path="/" element={<Home />} />

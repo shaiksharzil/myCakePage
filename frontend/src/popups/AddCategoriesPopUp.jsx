@@ -21,13 +21,6 @@ const AddCategoriesPopUp = ({ setShowPopup, onCategoryAdded }) => {
           loading: `Creating ${category} category...`,
           success: `${category} Category added successfully!`,
           error: `Failed to add ${category} category.`,
-        },
-        {
-          style: {
-            borderRadius: "10px",
-            background: "#333",
-            color: "#fff",
-          },
         }
       )
       .then((res) => {
@@ -38,7 +31,7 @@ const AddCategoriesPopUp = ({ setShowPopup, onCategoryAdded }) => {
         // console.error("Error creating category:", err);
       });
   };
-  
+
   return (
     <div className="w-screen h-full fixed top-0 flex items-center justify-center z-20 backdrop-filter backdrop-blur-md overflow-y-hidden">
       <div className="w-96 border border-white/10 rounded-md shadow-lg bg-white/5 backdrop-filter backdrop-blur-md max-md:w-86">

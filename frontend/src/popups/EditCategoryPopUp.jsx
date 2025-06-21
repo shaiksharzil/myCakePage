@@ -20,13 +20,6 @@ const EditCategoryPopUp = ({ category, onClose, onUpdated }) => {
           loading: "Updating category...",
           success: "Category updated successfully!",
           error: "Failed to update category.",
-        },
-        {
-          style: {
-            borderRadius: "10px",
-            background: "#333",
-            color: "#fff",
-          },
         }
       );
       onUpdated(res.data.updatedCategory); // Refresh UI
