@@ -92,7 +92,7 @@ const CreateProfile = () => {
 
       navigate("/account");
     } catch (err) {
-      console.error("Profile creation error:", err);
+      // console.error("Profile creation error:", err);
     } finally {
       setIsSubmitting(false);
     }

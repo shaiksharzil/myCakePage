@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 const EditFlavoursPopUp = ({ setShowPopup, onUpdate, flavour }) => {
   const [flavourName, setFlavourName] = useState("");
@@ -13,7 +14,13 @@ const EditFlavoursPopUp = ({ setShowPopup, onUpdate, flavour }) => {
 
   const handleUpdate = () => {
     if (!flavourName || !price) {
-      alert("Please fill out all fields");
+      toast.error("Please fill out all fields", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
       return;
     }
     onUpdate({ ...flavour, name: flavourName, pricePerKg: parseFloat(price) });

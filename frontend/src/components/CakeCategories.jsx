@@ -32,10 +32,6 @@ const CakeCategories = ({ value, onEdit, onDelete }) => {
               <i className="ri-edit-2-line" />
               Edit
             </button>
-            <button className="flex items-center gap-1 cursor-pointer text-white/70 hover:text-white transition">
-              <i className="ri-share-line" />
-              Share
-            </button>
             <button
               onClick={() => onDelete(value)}
               className="flex items-center gap-1 cursor-pointer text-red-400 hover:text-red-300 transition"

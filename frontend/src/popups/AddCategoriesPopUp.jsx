@@ -35,7 +35,7 @@ const AddCategoriesPopUp = ({ setShowPopup, onCategoryAdded }) => {
         setShowPopup(false);
       })
       .catch((err) => {
-        console.error("Error creating category:", err);
+        // console.error("Error creating category:", err);
       });
   };
   

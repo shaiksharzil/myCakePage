@@ -15,7 +15,7 @@ const Nav = () => {
   const [open, setOpen] = useState(false);
   const { isAuthenticated, checkAuth, setIsAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation(); // ✅ Needed to trigger useEffect
+  const location = useLocation(); 
   const { customUrl, loadingProfile } = useProfile();
   const homeIconRef  = useRef();
   const signOutIconRef = useRef();
@@ -27,7 +27,7 @@ const Nav = () => {
 
   useEffect(() => {
     checkAuth();
-  }, [location.pathname]); // 🔁 Rerun on path change
+  }, [location.pathname]);
 
   const handleLogout = async () => {
     await axios.post(
@@ -46,8 +46,6 @@ const Nav = () => {
     const buttonClass = isMobile
       ? "text-white flex items-center bg-white shimmer border border-white/10 px-2 py-0.5 rounded-md"
       : "text-white flex font-semibold bg-white shimmer cursor-pointer border border-white/10 px-2 py-1 rounded-2xl";
-
-    // if (loading) return null;
 
     return (
       <>

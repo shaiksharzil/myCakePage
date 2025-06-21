@@ -6,6 +6,7 @@ import CakeCategory from "../components/CakesCategory";
 import toast from "react-hot-toast";
 import SkeletonPublicProfileCard from "../loaders/SkeletonPublicProfileCard";
 import SkeletonPublicCakeCategory from "../loaders/SkeletonPublicCakeCategory";
+import NoCakeCategoriesPublic from "../components/NoCakeCategoriesPublic";
 
 const Profile = () => {
   const { customUrl } = useParams();
@@ -39,14 +40,21 @@ const Profile = () => {
       {loading ? (
         <>
           <SkeletonPublicProfileCard />
-          {Array.from({ length: 2 }).map((_, idx) => {
-            return <SkeletonPublicCakeCategory key={idx} />;
-          })}
+          {Array.from({ length: 2 }).map((_, idx) => (
+            <SkeletonPublicCakeCategory key={idx} />
+          ))}
         </>
       ) : (
         <>
           <PublicProfileCard profile={profile} />
-          <CakeCategory categories={categories} />
+          {categories.length === 0 ? (
+            <NoCakeCategoriesPublic />
+          ) : (
+            <CakeCategory
+              categories={categories}
+              bakeryName={profile.bakeryName}
+            />
+          )}
         </>
       )}
     </div>

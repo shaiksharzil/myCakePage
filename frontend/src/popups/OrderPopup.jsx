@@ -8,6 +8,9 @@ const OrderPopup = ({ cake, quantity, flavour, price, mobileNo, onClose }) => {
   let cakeNameMess = "";
   const [messageOnCake, setMessageOnCake] = useState("");
   if (cake.cakeName) cakeNameMess = `• cake Name: ${cake.cakeName}`;
+  let messOnCake = "";
+  let specReq = "";
+  const [specialRequests, setSpecialRequests] = useState("");
   const formatDate = (dateStr) => {
     if (!dateStr) return "";
     const date = new Date(dateStr);
@@ -29,7 +32,12 @@ const OrderPopup = ({ cake, quantity, flavour, price, mobileNo, onClose }) => {
       });
       return;
     }
-    if (message) setMessageOnCake(`🎁 Message on Cake: ${message}`);
+    if (message) {
+      messOnCake=`🎁 Message on Cake: ${message}`;
+    }
+    if (specialRequests) {
+      specReq=`✨ Special Requests: ${specialRequests}`;
+    }
     toast.promise(
       new Promise((resolve) => {
         setTimeout(() => {
@@ -43,9 +51,10 @@ ${cakeNameMess}
 • Quantity: ${quantity} kg
 • Total Price: ₹${price}/-
 
-${messageOnCake}
+${messOnCake}
 📅 Delivery Date: ${formatDate(deliveryDate)}
 ⏰ Delivery Time: ${deliveryTime}
+${specReq}
 
 🖼️ Cake Image: ${cake.imageUrl}
 
@@ -100,13 +109,13 @@ Please confirm my order. Thank you! 😊
             ""
           )}
           <p className="text-white/70">
-            Selected Flavour: <span className="font-medium">{flavour}</span>
+            Flavour: <span className="font-medium">{flavour}</span>
           </p>
           <p className="text-white/70">
-            Selected Quantity: <span className="font-medium">{quantity}kg</span>
+            Quantity: <span className="font-medium">{quantity}kg</span>
           </p>
           <p className="text-white/70">
-            Total Price: <span className="font-medium">₹{price}/-</span>
+            Price: <span className="font-medium">₹{price}/-</span>
           </p>
         </div>
 
@@ -144,6 +153,20 @@ Please confirm my order. Thank you! 😊
               placeholder="e.g. Happy Birthday!"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label className="text-sm text-white/70">
+              Special Requests (Optional):
+            </label>
+            <input
+              type="text"
+              maxLength={50}
+              className="w-full p-2 rounded-xl outline-none bg-white/10 border border-white/20 text-white"
+              placeholder="e.g. Change in colour"
+              value={specialRequests}
+              onChange={(e) => setSpecialRequests(e.target.value)}
             />
           </div>
 

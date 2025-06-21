@@ -70,7 +70,7 @@ const AdminCakesPage = () => {
       setShowPopup(false);
       await fetchCakes();
     } catch (err) {
-      console.error("Create Cake Error:", err?.response?.data || err.message);
+      // console.error("Create Cake Error:", err?.response?.data || err.message);
     }
   };
   
@@ -94,7 +94,7 @@ const AdminCakesPage = () => {
       setEditCake(null);
       fetchCakes();
     } catch (err) {
-      console.error("Update error:", err?.response?.data || err.message);
+      // console.error("Update error:", err?.response?.data || err.message);
     }
   };
   

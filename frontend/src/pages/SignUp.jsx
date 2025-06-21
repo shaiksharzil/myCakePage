@@ -71,7 +71,7 @@ const Signup = () => {
       await checkAuth();
       navigate("/createprofile");
     } catch (err) {
-      console.error("Signup error:", err);
+      // console.error("Signup error:", err);
     } finally {
       setIsSubmitting(false);
     }

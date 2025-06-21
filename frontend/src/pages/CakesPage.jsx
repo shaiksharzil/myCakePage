@@ -25,7 +25,7 @@ const CakesPage = () => {
         );
         setCakes(res.data);
       } catch (error) {
-        console.error("Failed to fetch cakes:", error);
+        // console.error("Failed to fetch cakes:", error);
         setNotfound(error.status)
       } finally {
         setLoading(false);

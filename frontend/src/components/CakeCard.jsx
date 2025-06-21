@@ -51,7 +51,7 @@ const CakeCard = ({ cake,mobile }) => {
           />
         </div>
         {cake.cakeName ? (
-          <div className="text-white/70 text-lg font-medium">
+          <div className="text-white/70 text-xl font-medium">
             {cake.cakeName}
           </div>
         ) : (

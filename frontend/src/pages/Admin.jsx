@@ -32,7 +32,7 @@ const Admin = () => {
       });
       setCategories(res.data);
     } catch (err) {
-      console.error("Error fetching categories", err);
+      // console.error("Error fetching categories", err);
     } finally {
       setLoading(false);
     }
@@ -66,7 +66,7 @@ const Admin = () => {
       );
       setCategories((prev) => prev.filter((cat) => cat._id !== catId));
     } catch (err) {
-      console.error("Failed to delete category:", err);
+      // console.error("Failed to delete category:", err);
     }
   };
   
@@ -103,7 +103,7 @@ const Admin = () => {
       )}
       {showQrPopup && (
         <QrCodePopUp
-          url={`http://localhost:5173/${customUrl}`}
+          url={`https://mycakepage.vercel.app/${customUrl}`}
           setShowPopup={setShowQrPopup}
           profile={profileData}
         />

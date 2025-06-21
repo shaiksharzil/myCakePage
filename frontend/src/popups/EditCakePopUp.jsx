@@ -150,18 +150,22 @@ const EditCakePopUp = ({ cake, setShowPopup, onUpdate }) => {
               <label className="text-sm text-white/70">Select Flavours</label>
               <div className="flex flex-wrap gap-2 mt-1">
                 {flavours.map((flavour) => (
-                  <label
+                  <div
                     key={flavour._id}
-                    className="flex items-center gap-1 text-sm cursor-pointer bg-white/10 px-2 py-1 rounded-xl"
+                    className="flex items-center gap-2 bg-white/10 px-2 py-1 rounded-xl cursor-pointer"
+                    onClick={() => handleFlavourToggle(flavour._id)}
                   >
                     <input
                       type="checkbox"
                       checked={selectedFlavours.includes(flavour._id)}
                       onChange={() => handleFlavourToggle(flavour._id)}
-                      className="accent-white cursor-pointer"
+                      className="accent-black cursor-pointer"
+                      onClick={(e) => e.stopPropagation()} // prevent double toggle on mobile
                     />
-                    {flavour.name}- ₹{flavour.pricePerKg}/-
-                  </label>
+                    <span className="text-sm">
+                      {flavour.name} - ₹{flavour.pricePerKg}/-
+                    </span>
+                  </div>
                 ))}
               </div>
             </div>

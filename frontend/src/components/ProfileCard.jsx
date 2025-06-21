@@ -28,7 +28,7 @@ const ProfileCard = ({ setShowQrPopup, setCustomUrl, setProfileData }) => {
         if (err.response?.status === 404) {
           navigate("/createprofile");
         } else {
-          console.error("Error fetching profile:", err);
+          // console.error("Error fetching profile:", err);
         }
       } finally {
         setLoading(false); 
@@ -40,20 +40,28 @@ const ProfileCard = ({ setShowQrPopup, setCustomUrl, setProfileData }) => {
   
 
   const handleShare = async () => {
-    if (navigator.share) {
-      try {
+    const url = `https://mycakepage.vercel.app/${user.customUrl}`;
+    const message = `🎂 Check out ${profile.bakeryName}'s cake collection on MyCakePage!\n\nExplore their unique cake designs for every occasion:\n${url}\n\nPowered by https://mycakepage.vercel.app – India's easiest cake portfolio builder. 🍰`;
+    try {
+      if (navigator.share) {
         await navigator.share({
-          title: "Check out this cake profile!",
-          text: `Here’s a beautiful cake collection I found — explore the designs and get inspired! Visit myCakePage to discover more.`,
-
-          // Replace this with your deployed site link in production
-          url: `http://localhost:5173/${user.customUrl}`,
+          title: `${profile.bakeryName} | MyCakePage`,
+          text: message,
+          url,
         });
-      } catch (error) {
-        console.error("Error sharing:", error);
+      } else {
+        await navigator.clipboard.writeText(message);
+        toast.success("Link copied to clipboard!", {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+          },
+        });
       }
-    } else {
-      toast.error("Web Share API not supported in your browser.", {
+    } catch (error) {
+      console.error("Error sharing:", error);
+      toast.error("Unable to share this page.", {
         style: {
           borderRadius: "10px",
           background: "#333",
@@ -62,6 +70,7 @@ const ProfileCard = ({ setShowQrPopup, setCustomUrl, setProfileData }) => {
       });
     }
   };
+  
   
 
   if (loading) return <SkeletonPublicProfileCard />;
@@ -126,11 +135,11 @@ const ProfileCard = ({ setShowQrPopup, setCustomUrl, setProfileData }) => {
           </a>
           <div className="flex items-center justify-center m-2">
             <p className="border border-white/10 bg-white/10 text-white/70 py-1 px-2 rounded-l-md text-ellipsis max-w-[70%] truncate">
-              http://localhost:5173/{user.customUrl}
+              https://mycakepage.vercel.app/{user.customUrl}
             </p>
             <button
               onClick={() => {
-                const url = `http://localhost:5173/${user.customUrl}`;
+                const url = `https://mycakepage.vercel.app/${user.customUrl}`;
                 navigator.clipboard
                   .writeText(url)
                   .then(() => {

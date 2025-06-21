@@ -32,7 +32,7 @@ const EditCategoryPopUp = ({ category, onClose, onUpdated }) => {
       onUpdated(res.data.updatedCategory); // Refresh UI
       onClose(); // Close popup
     } catch (error) {
-      console.error("Failed to update category:", error);
+      // console.error("Failed to update category:", error);
     }
   };
 

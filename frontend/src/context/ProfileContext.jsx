@@ -20,7 +20,7 @@ export const ProfileProvider = ({ children }) => {
         setProfile(res.data.profile);
         setCustomUrl(res.data.user.customUrl);
       } catch (err) {
-        console.error("Failed to fetch profile:", err);
+        // console.error("Failed to fetch profile:", err);
       } finally {
         setLoadingProfile(false);
       }

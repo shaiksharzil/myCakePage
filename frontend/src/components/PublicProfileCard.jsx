@@ -3,10 +3,45 @@ import Tilt from "react-parallax-tilt";
 import CopySvg from "../icons/CopySvg";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import ShareIcon from "../icons/ShareIcon";
 
 const PublicProfileCard = ({ profile }) => {
   const { customUrl } = useParams();
   if (!profile) return null;
+
+  const handleShare = async () => {
+    const url = `https://mycakepage.vercel.app/${customUrl}`;
+    const message = `🎂 Check out ${profile.bakeryName}'s cake collection on MyCakePage!\n\nExplore beautifully designed cakes for every occasion. View the full gallery here:\n${url}\n\nPowered by https://mycakepage.vercel.app – India’s easiest cake portfolio builder. 🍰`;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: `${profile.bakeryName} | MyCakePage`,
+          text: message,
+          url,
+        });
+      } else {
+        await navigator.clipboard.writeText(message);
+        toast.success("Link copied to clipboard!", {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+          },
+        });
+      }
+    } catch (error) {
+      console.error("Error sharing:", error);
+      toast.error("Unable to share this page.", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    }
+  };
+  
 
   return (
     <div className="pt-10 w-screen flex items-center justify-center">
@@ -61,13 +96,13 @@ const PublicProfileCard = ({ profile }) => {
           <div className="flex items-center justify-center m-2 max-w-[90%] mx-auto">
             <p
               className="border border-white/10 bg-white/10 text-white/70 py-1.5 px-2 rounded-l-md text-sm max-w-[70%] truncate"
-              title={`https://mycakepage.com/${customUrl}`}
+              title={`https://mycakepage.vercel.app/${customUrl}`}
             >
-              {`https://mycakepage.com/${customUrl}`}
+              {`https://mycakepage.vercel.app/${customUrl}`}
             </p>
             <button
               onClick={() => {
-                const url = `https://mycakepage.com/${customUrl}`;
+                const url = `https://mycakepage.vercel.app/${customUrl}`;
                 navigator.clipboard
                   .writeText(url)
                   .then(() => {
@@ -89,11 +124,13 @@ const PublicProfileCard = ({ profile }) => {
                     });
                   });
               }}
-              className="bg-white/20 border border-white/10 rounded-r-md px-1"
+              className="bg-white/20 border cursor-pointer border-white/10 rounded-r-md px-1"
             >
               <CopySvg />
             </button>
-            <i className="ri-share-line text-white/50 text-2xl ml-4 cursor-pointer hover:text-white/70"></i>
+            <div onClick={handleShare}>
+              <ShareIcon />
+            </div>{" "}
           </div>
         </div>
       </Tilt>

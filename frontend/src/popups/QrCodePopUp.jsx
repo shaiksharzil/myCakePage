@@ -46,7 +46,7 @@ const QrCodePopUp = ({ url, setShowPopup, profile }) => {
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center z-50 backdrop-blur-md bg-black/30">
-      <Toaster/>
+      <Toaster />
       <div className="text-white text-center">
         {/* ✅ This part will be downloaded */}
         <div
@@ -89,9 +89,14 @@ const QrCodePopUp = ({ url, setShowPopup, profile }) => {
           <hr className="border-gray-300 my-2" />
 
           <p className="text-xs text-gray-500 italic mt-2">
-            Developed by <span className=" text-emerald-400 font-semibold">Shaik Sharzil</span>
+            Developed by{" "}
+            <span className=" text-emerald-400 font-semibold">
+              Shaik Sharzil
+            </span>
           </p>
-          <p style={{fontFamily:"Alagen"}} className="text-xs text-gray-400">mycakepage.com</p>
+          <p style={{ fontFamily: "Alagen" }} className="text-xs text-gray-400">
+            mycakepage.vercel.app
+          </p>
         </div>
 
         {/* ❌ This part WON’T be downloaded */}
