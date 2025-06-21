@@ -34,7 +34,7 @@ exports.signup = async (req, res) => {
   // 🍪 Set cookie
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false, // Set to true in production (HTTPS)
+    secure: true, // Set to true in production (HTTPS)
     sameSite: "Lax",
     maxAge: remember ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000,
   });
@@ -75,7 +75,7 @@ exports.signin = async (req, res) => {
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false, // set to true in production (HTTPS)
+    secure: true, // set to true in production (HTTPS)
     sameSite: "Lax",
     maxAge: remember ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000,
   });

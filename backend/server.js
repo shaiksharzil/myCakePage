@@ -10,6 +10,7 @@ const path = require("path");
 const cakeCategoryRoutes = require("./routes/cakeCategoryRoutes");
 const flavourRoutes = require("./routes/flavourRoutes");
 const cakeRoutes = require("./routes/cakeRoutes");
+const publicRoutes = require("./routes/publicRoutes");
 
 
 
@@ -30,9 +31,8 @@ app.use("/api/profile", profileRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/flavours", flavourRoutes);
 app.use("/api/cakes", cakeRoutes);
-const publicRoutes = require("./routes/publicRoutes");
+
 app.use("/api/public", publicRoutes);
-app.use("/api/public", require("./routes/publicRoutes"));
 
 app.post("/send-email", async (req, res) => {
   const { name, email, mobile, message } = req.body;

@@ -136,11 +136,11 @@ const Home = () => {
                 setUrlError(error);
                 if (!error) checkUrlAvailability(value);
               }}
-              className="bg-white/10 text-white/70 px-3 max-md:px-2 py-2 rounded outline-none border border-white/10"
+              className="bg-white/10 text-white/70 px-3  max-md:px-0 py-2 rounded outline-none border border-white/10"
             />
             <Link
               to={"/signup"}
-              className=" py-3 px-2 ml-2 bg-white hover:text-white rounded-md shimmer text-white/70 border border-white/10 font-bold cursor-pointer"
+              className=" py-3 px-2 ml-2 bg-white max-md:px-1 hover:text-white rounded-md shimmer text-white/70 border border-white/10 font-bold cursor-pointer"
             >
               Claim your CakePage
             </Link>
@@ -202,8 +202,8 @@ const Home = () => {
       </section>
       <section className="px-6 pt-20 max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 50, scale: 0.7 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          initial={{ opacity: 0, y: 50}}
+          whileInView={{ opacity: 1, y: 0}}
           transition={{ duration: 1 }}
           viewport={{ once: true }}
         >
