@@ -94,12 +94,10 @@ const QrCodePopUp = ({ url, setShowPopup, profile }) => {
               Shaik Sharzil
             </span>
           </p>
-          <p style={{ fontFamily: "Alagen" }} className="text-xs text-gray-400">
-            mycakepage.vercel.app
+          <p  className="text-xs text-gray-400 italic">
+            https://mycakepage.vercel.app/
           </p>
         </div>
-
-        {/* ❌ This part WON’T be downloaded */}
         <div className="flex justify-center gap-3 mt-4">
           <button
             onClick={downloadPromoImage}

@@ -49,22 +49,6 @@ const FlavoursPage = () => {
         },
       });
     }
-
-    const isDuplicate = flavours.some(
-      (f) =>
-        f._id !== _id &&
-        f.name.trim().toLowerCase() === trimmedName.toLowerCase()
-    );
-    if (isDuplicate) {
-      return toast.error("Another flavour with this name already exists.", {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
-    }
-
     try {
       const res = await toast.promise(
         axios.put(

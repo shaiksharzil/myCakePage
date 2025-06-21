@@ -61,7 +61,26 @@ const CreateProfile = () => {
       });
       return;
     }
-
+    if (!formData.bakeryName.trim()) {
+      toast.error("Please enter the Bakery name", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      return;
+    }
+    if (!formData.address.trim()) {
+      toast.error("Please enter the Address", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      return;
+    }
     const form = new FormData();
     form.append("bakeryName", formData.bakeryName);
     form.append("address", formData.address);
@@ -115,7 +134,7 @@ const CreateProfile = () => {
           onSubmit={handleSubmit}
           className="p-3 bg-white/10 border border-white/10 shadow-lg backdrop-filter backdrop-blur-md rounded-xl w-86"
         >
-          <h2 className="font-bold text-xl shimmer-text text-center text-white/80">
+          <h2 className="font-bold text-xl+ text-center text-white/80">
             Let’s Build Your Bakery Profile
           </h2>
 

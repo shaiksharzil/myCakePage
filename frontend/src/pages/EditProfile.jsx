@@ -87,7 +87,26 @@ const EditProfile = () => {
       });
       return;
     }
-
+    if (!formData.bakeryName.trim()) {
+      toast.error("Please enter the Bakery name", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      return;
+    }
+    if (!formData.address.trim()) {
+      toast.error("Please enter the Address", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      return;
+    }
     const form = new FormData();
     form.append("bakeryName", formData.bakeryName);
     form.append("address", formData.address);

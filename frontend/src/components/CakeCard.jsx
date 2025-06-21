@@ -71,7 +71,7 @@ const CakeCard = ({ cake,mobile }) => {
                   className="bg-[#464646]"
                   value={flavour._id}
                 >
-                  {flavour.name} — ₹{flavour.pricePerKg}
+                  {flavour.name}
                 </option>
               ))}
             </select>

@@ -62,9 +62,53 @@ const EditCakePopUp = ({ cake, setShowPopup, onUpdate }) => {
         : [...prev, flavourId]
     );
   };
-
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.size < 1024 * 1024) {
+      setImage(file);
+      setPreview(URL.createObjectURL(file));
+    } else {
+      toast.error("File must be under 1MB", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    }
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!minQty) {
+      toast.error("Minimum Order Quantity are required.", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      return;
+    }
+    if (minQty <= 0) {
+      toast.error("Minimum order quantity must be greater than 0 kg.", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      return;
+    }
+    if (extraPrice <= 0) {
+      toast.error("Extra price must be greater than ₹0/-.", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      return;
+    }
     if (selectedFlavours.length === 0) {
       toast.error("Please select at least one flavour.", {
         style: {
@@ -103,11 +147,13 @@ const EditCakePopUp = ({ cake, setShowPopup, onUpdate }) => {
         <h2 className="text-xl font-bold mb-4 text-center">Edit Cake</h2>
 
         <div className="flex flex-col gap-3">
-          <label className="text-sm text-white/70">Cake Image</label>
+          <label className="text-sm text-white/70">
+            Cake Image <i className="ri-upload-cloud-line"></i> (max 1MB):
+          </label>
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
+            onChange={handleImageChange}
             className="bg-white/10 border border-white/20 p-2 outline-none rounded-xl text-sm text-white"
           />
           {preview && (

@@ -47,9 +47,18 @@ const AddCakePopUp = ({ setShowPopup, onCreate, categoryId }) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (!file) return;
-    setImageFile(file);
-    setPreview(URL.createObjectURL(file));
+    if (file && file.size < 1024 * 1024) {
+      setImageFile(file);
+      setPreview(URL.createObjectURL(file));
+    } else {
+      toast.error("File must be under 1MB", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    }
   };
 
   const handleFlavourToggle = (flavourId) => {
@@ -72,7 +81,26 @@ const AddCakePopUp = ({ setShowPopup, onCreate, categoryId }) => {
       });
       return;
     }
-
+    if (minQty<=0) {
+      toast.error("Minimum order quantity must be greater than 0 kg.", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      return;
+    }
+    if (extraPrice <= 0) {
+      toast.error("Extra price must be greater than ₹0/-.", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      return;
+    }
     if (selectedFlavours.length === 0) {
       toast.error("Please select at least one flavour.", {
         style: {
@@ -108,7 +136,9 @@ const AddCakePopUp = ({ setShowPopup, onCreate, categoryId }) => {
         <h2 className="text-xl font-bold mb-4 text-center">Add New Cake</h2>
 
         <div className="flex flex-col gap-3">
-          <label className="text-sm text-white/70">Cake Image *</label>
+          <label className="text-sm text-white/70">
+            Cake Image <i className="ri-upload-cloud-line"></i> (max 1MB): *
+          </label>
           <input
             type="file"
             accept="image/*"

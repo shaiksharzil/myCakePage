@@ -30,7 +30,7 @@ const AdminCakeCard = (props) => {
             alt=""
           />
         </div>
-        {cake.cakeName ? (
+        {cake.cakeName.trim() ? (
           <div className="text-white/70 text-lg font-medium">
             Cake Name: {cake.cakeName}
           </div>
