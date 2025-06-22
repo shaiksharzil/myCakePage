@@ -11,6 +11,7 @@ import QrCodePopUp from "../popups/QrCodePopUp";
 import toast from "react-hot-toast";
 import CakeCategorySkeletonLoader from "../loaders/CakeCategorySkeletonLoader";
 import NoCakeCategories from "../components/NoCakeCategories";
+import { useProfile } from "../context/ProfileContext";
 
 const Admin = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -18,9 +19,11 @@ const Admin = () => {
   const [categories, setCategories] = useState([]);
   const [deletingCategory, setDeletingCategory] = useState(null);
   const [showQrPopup, setShowQrPopup] = useState(false);
-  const [customUrl, setCustomUrl] = useState("");
+  const [customUrl2, setCustomUrl2] = useState("");
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
+    const { customUrl } = useProfile();
+  
   const Url = import.meta.env.VITE_URL;
 
   const fetchCategories = async () => {
@@ -68,7 +71,6 @@ const Admin = () => {
   useEffect(() => {
     fetchCategories();
   }, []);
-
   return (
     <div className="w-screen min-h-screen overflow-x-hidden bg-black">
       {showPopup && (
@@ -102,7 +104,7 @@ const Admin = () => {
 
       <ProfileCard
         setShowQrPopup={setShowQrPopup}
-        setCustomUrl={setCustomUrl}
+        setCustomUrl={setCustomUrl2}
         setProfileData={setProfileData}
       />
 
@@ -124,13 +126,22 @@ const Admin = () => {
       )}
 
       <AddButton onClick={() => setShowPopup(true)} />
-      <div className="w-screen flex justify-center items-center mt-5">
+      <div className="w-screen flex flex-col gap-3 justify-center items-center mt-5">
         <Link
           to={"/flavours"}
-          className="w-130 h-15 rounded-xl shimmer bg-white/10 hover:bg-white/20 cursor-pointer flex text-white items-center justify-center px-2 max-md:w-86 border border-white/10 shadow-lg backdrop-filter backdrop-blur-md"
+          className="w-130 h-15 rounded-xl bg-white/10 hover:bg-white/20 cursor-pointer flex text-white items-center justify-center px-2 max-md:w-86 border border-white/10 shadow-lg backdrop-filter backdrop-blur-md"
         >
           <div className="font-bold text-xl  cursor-pointer">
             Manage Cake Flavours{" "}
+            <i className="ri-external-link-line text-2xl ml-2"></i>
+          </div>
+        </Link>
+        <Link
+          to={`/${customUrl}`}
+          className="w-130 h-15 rounded-xl bg-white/10 hover:bg-white/20 cursor-pointer flex text-white items-center justify-center px-2 max-md:w-86 border border-white/10 shadow-lg backdrop-filter backdrop-blur-md"
+        >
+          <div className="font-bold text-xl  cursor-pointer">
+            Visit Your Cake Page{" "}
             <i className="ri-external-link-line text-2xl ml-2"></i>
           </div>
         </Link>

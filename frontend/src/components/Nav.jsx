@@ -16,7 +16,7 @@ const Nav = () => {
   const { isAuthenticated, checkAuth, setIsAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation(); 
-  const { customUrl, loadingProfile } = useProfile();
+  const { customUrl } = useProfile();
   const homeIconRef  = useRef();
   const signOutIconRef = useRef();
   const signUpIconRef = useRef();

@@ -86,7 +86,10 @@ const ProfileCard = ({ setShowQrPopup, setCustomUrl, setProfileData }) => {
             </div>
           )}
 
-          <div className="h-12 text-center flex items-center justify-end">
+          <div className="h-12 text-center flex items-center justify-between">
+            <div className="ml-2 text-white/70 text-xl">
+              <i className="ri-eye-line"></i> {profile.views/2||0}
+            </div>
             <Link
               to={"/profileedit"}
               onMouseEnter={() => editIconRef.current?.playForward?.()}
@@ -106,7 +109,7 @@ const ProfileCard = ({ setShowQrPopup, setCustomUrl, setProfileData }) => {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className=" px-2 text-sm my-1 cursor-pointer block  text-white/80"
+              className=" px-2 text-sm my-1 text-center cursor-pointer block  text-white/80"
             >
               <i className="ri-map-pin-line mr-1"></i> {profile.address}
             </a>
@@ -114,7 +117,7 @@ const ProfileCard = ({ setShowQrPopup, setCustomUrl, setProfileData }) => {
           <div className="flex items-center justify-center">
             <a
               href={`tel:+91${profile.mobile}`}
-              className="text-sm cursor-pointer block text-white/80"
+              className="text-sm cursor-pointer text-center block text-white/80"
             >
               <i className="ri-phone-line mr-1"></i> +91 {profile.mobile}
             </a>

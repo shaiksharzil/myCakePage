@@ -23,8 +23,11 @@ const profileSchema = new mongoose.Schema(
     },
     imageUrl: {
       type: String,
-      default:
-        "",
+      default: "",
+    },
+    views: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

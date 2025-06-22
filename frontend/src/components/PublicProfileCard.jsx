@@ -67,7 +67,7 @@ const PublicProfileCard = ({ profile }) => {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className=" px-2 text-sm my-1 cursor-pointer block  text-white/80"
+              className=" px-2 text-sm my-1 cursor-pointer text-center block  text-white/80"
             >
               <i className="ri-map-pin-line"></i> {profile.address}
             </a>
@@ -75,7 +75,7 @@ const PublicProfileCard = ({ profile }) => {
           <div className="flex justify-center items-center">
             <a
               href={`tel:+91${profile.mobile}`}
-              className=" text-sm cursor-pointer block text-white/80"
+              className=" text-sm cursor-pointer text-center block text-white/80"
             >
               <i className="ri-phone-line"></i> +91 {profile.mobile}
             </a>

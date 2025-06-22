@@ -33,14 +33,14 @@ const App = () => {
     <AuthProvider>
       <ProfileProvider>
         <Router>
-          <div className="flex flex-col min-h-screen bg-black text-white">
+          <div className="flex flex-col min-h-screen bg-black text-white overflow-x-hidden">
             <Nav />
             <Toaster
               position="top-center"
               toastOptions={{
                 style: {
                   borderRadius: "10px",
-                  background: "#333",
+                  background: "#000",
                   color: "#fff",
                 },
               }}

@@ -14,7 +14,11 @@ router.get("/profile/:customUrl", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const profile = await Profile.findOne({ user: user._id });
+    const profile = await Profile.findOneAndUpdate(
+      { user: user._id },
+      { $inc: { views: 1 } },
+      { new: true }
+    );
     if (!profile) {
       return res.status(404).json({ error: "Profile not found" });
     }

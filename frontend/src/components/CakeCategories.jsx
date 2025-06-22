@@ -18,7 +18,7 @@ const CakeCategories = ({ value, onEdit, onDelete }) => {
             <i class="ri-arrow-right-double-line mt-1 text-xl transform transition-transform duration-300 group-hover:translate-x-1.5"></i>
           </Link>
           <i
-            className="ri-more-2-fill text-xl text-white/70 cursor-pointer hover:text-white"
+            className="ri-more-2-fill ml-2 text-xl text-white/70 cursor-pointer hover:text-white"
             onClick={toggleMenu}
           ></i>
         </div>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect} from "react";
 import AdminCakeCard from "../components/AdminCakeCard";
 import axios from "axios";
-import Footer from "../components/Footer";
 import SkeletonAdminCakeCard from "../loaders/SkeletonAdminCakeCard";
 import AddButton from "../components/AddButton";
 import AddCakePopUp from "../popups/AddCakePopUp";
@@ -24,6 +23,7 @@ const AdminCakesPage = () => {
   const [editCake, setEditCake] = useState(null);
   const [deleteCake, setDeleteCake] = useState(null);
   const [notfound, setNotfound] = useState("");
+
   const Url = import.meta.env.VITE_URL;
 
 
@@ -37,7 +37,11 @@ const AdminCakesPage = () => {
       const res = await axios.get(`${Url}/api/cakes/${id}`, {
         withCredentials: true,
       });
-      setCakes(res.data);
+      const sorted = res.data.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      setCakes(sorted);
+
     } catch (err) {
       console.error(
         "Failed to fetch cakes:",
@@ -122,35 +126,35 @@ const AdminCakesPage = () => {
     }
   };
   
-  useEffect(() => {
-    fetchCakes();
-  }, [id]);
+ useEffect(() => {
+   fetchCakes();
+ }, [id]);
   if (notfound == 500) return <NotFound />;
   return (
     <div className="w-screen px-10 min-h-screen bg-black overflow-x-hidden max-md:px-2">
-  {loading ? (
-    <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
-      {Array.from({ length: 20 }).map((_, idx) => (
-        <SkeletonAdminCakeCard key={idx} />
-      ))}
-    </div>
-  ) : cakes.length === 0 ? (
-    <NoCakes />
-  ) : (
-    <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
-      {cakes.map((cake, idx) => (
-        <AdminCakeCard
-          key={idx}
-          src={cake.imageUrl}
-          minQty={cake.minOrderQty}
-          extraPrice={cake.extraPrice}
-          cake={cake}
-          onEdit={(cake) => setEditCake(cake)}
-          onDelete={() => setDeleteCake(cake)}
-        />
-      ))}
-    </div>
-  )}
+      {loading ? (
+        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
+          {Array.from({ length: 20 }).map((_, idx) => (
+            <SkeletonAdminCakeCard key={idx} />
+          ))}
+        </div>
+      ) : cakes.length === 0 ? (
+        <NoCakes />
+      ) : (
+        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
+          {cakes.map((cake, idx) => (
+            <AdminCakeCard
+              key={idx}
+              src={cake.imageUrl}
+              minQty={cake.minOrderQty}
+              extraPrice={cake.extraPrice}
+              cake={cake}
+              onEdit={(cake) => setEditCake(cake)}
+              onDelete={() => setDeleteCake(cake)}
+            />
+          ))}
+        </div>
+      )}
       {showPopup && (
         <AddCakePopUp
           setShowPopup={setShowPopup}
@@ -172,7 +176,6 @@ const AdminCakesPage = () => {
           onDelete={handleDeleteCake}
         />
       )}
-
       <AddButton onClick={() => setShowPopup(true)} />
     </div>
   );

@@ -2,37 +2,44 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import CakeCard from "../components/CakeCard";
-import NotFound from './NotFound';
+import NotFound from "./NotFound";
 import SkeletonCakeCardCustomer from "../loaders/SkeletonCakeCardCustomer";
 import NoCustomerCakes from "../components/NoCustomerCakes";
+import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 const CakesPage = () => {
   const { customUrl, categoryId } = useParams();
   const [cakes, setCakes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [flavours, setFlavours] = useState([]);
-  const [MobileNo, setMobileNo] = useState("")
-  const [notfound, setNotfound] = useState("")
+  const [MobileNo, setMobileNo] = useState("");
+  const [notfound, setNotfound] = useState("");
+  const [isDescending, setIsDescending] = useState(false);
+
   const Url = import.meta.env.VITE_URL;
 
+  const sortCakes = (cakes, descending = false) => {
+    return [...cakes].sort((a, b) =>
+      descending ? b.minOrderQty - a.minOrderQty : a.minOrderQty - b.minOrderQty
+    );
+  };
 
   useEffect(() => {
     const fetchCakes = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(
-          `${Url}/api/cakes/category/${categoryId}`
-        );
-        setCakes(res.data);
+        const res = await axios.get(`${Url}/api/cakes/category/${categoryId}`);
+        setCakes(sortCakes(res.data));
       } catch (error) {
-        // console.error("Failed to fetch cakes:", error);
-        setNotfound(error.status)
+        setNotfound(error.status);
       } finally {
         setLoading(false);
       }
     };
 
     if (categoryId) fetchCakes();
+
     axios
       .get(`${Url}/api/public/${customUrl}`)
       .then((res) => {
@@ -42,7 +49,26 @@ const CakesPage = () => {
         console.error("Failed to load profile data:", err);
       });
   }, [categoryId, customUrl]);
-  if (notfound == 500) return <NotFound />
+
+  const toggleSortOrder = () => {
+    const newOrder = !isDescending;
+    setIsDescending(newOrder);
+    const sorted = sortCakes(cakes, newOrder);
+    setCakes(sorted);
+    toast.success(
+      `Sorted by ${newOrder ? "Descending" : "Ascending"} Order Qty`,
+      {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      }
+    );
+  };
+
+  if (notfound === 500) return <NotFound />;
+
   return (
     <div className="w-screen px-10 min-h-screen bg-black overflow-x-hidden max-md:px-2">
       {loading ? (
@@ -60,6 +86,24 @@ const CakesPage = () => {
           ))}
         </div>
       )}
+
+      <motion.div
+        animate={{ y: -10 }}
+        transition={{
+          duration: 1,
+          repeatType: "reverse",
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="h-20 fixed right-0 w-20 rounded-full z-1 shimmer border border-white/10 shadow-lg backdrop-filter backdrop-blur-md bottom-0 mb-5 mr-5 text-4xl flex items-center justify-center cursor-pointer max-md:h-15 max-md:w-15"
+        onClick={toggleSortOrder}
+      >
+        <i
+          className={
+            isDescending ? "ri-sort-number-desc" : "ri-sort-number-asc"
+          }
+        ></i>
+      </motion.div>
     </div>
   );
 };

@@ -9,6 +9,7 @@ import DeletePopUp from "../popups/DeletePopUp";
 import EditFlavoursPopUp from "../popups/EditFlavoursPopUp";
 import FlavourCardSkeletonLoader from "../loaders/FlavourCardSkeletonLoader";
 import NoCakeFlavours from "../components/NoCakeFlavours";
+import QrCodePopUp from "../popups/QrCodePopUp";
 
 const FlavoursPage = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -18,6 +19,9 @@ const FlavoursPage = () => {
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [flavourToEdit, setFlavourToEdit] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showQrPopup, setShowQrPopup] = useState(false);
+  const [customUrl, setCustomUrl] = useState("");
+    const [profileData, setProfileData] = useState(null);
   const Url = import.meta.env.VITE_URL;
 
   const handleDeleteClick = (flavour) => {
@@ -72,7 +76,6 @@ const FlavoursPage = () => {
         withCredentials: true,
       });
       setFlavours(res.data);
-      console.log(res.data);
     } catch (err) {
       toast.error("Failed to load flavours");
     } finally {
@@ -113,7 +116,7 @@ const FlavoursPage = () => {
 
       setFlavours((prev) => [res.data, ...prev]);
     } catch (err) {
-      console.error("Flavour create error:", err);
+      // console.error("Flavour create error:", err);
     }
   };
 
@@ -148,7 +151,7 @@ const FlavoursPage = () => {
 
       setFlavours((prev) => prev.filter((f) => f._id !== id));
     } catch (err) {
-      console.error("Delete error:", err);
+      // console.error("Delete error:", err);
     }
   };
 
@@ -176,7 +179,18 @@ const FlavoursPage = () => {
           flavourName={flavourToDelete.name}
         />
       )}
-      <ProfileCard />
+      <ProfileCard
+        setShowQrPopup={setShowQrPopup}
+        setCustomUrl={setCustomUrl}
+        setProfileData={setProfileData}
+      />
+      {showQrPopup && (
+        <QrCodePopUp
+          url={`https://mycakepage.vercel.app/${customUrl}`}
+          setShowPopup={setShowQrPopup}
+          profile={profileData}
+        />
+      )}
       <AddButton onClick={() => setShowPopup(true)} />
       {loading ? (
         Array.from({ length: 8 }).map((_, i) => (

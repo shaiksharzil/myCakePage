@@ -18,7 +18,7 @@ const Profile = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${Url}/api/public/${customUrl}`)
+      .get(`${Url}/api/public/${customUrl}?countView=true`)
       .then((res) => {
         setProfile(res.data.profile);
         setCategories(res.data.categories);

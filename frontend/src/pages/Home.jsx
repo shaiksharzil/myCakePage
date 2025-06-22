@@ -106,27 +106,29 @@ const Home = () => {
           <p className="text-lg md:text-xl text-white/70 mb-8">
             A smart and stunning digital cake gallery for bakers to beautifully
             showcase their creations, flavors, and prices—all in one
-            personalized page. Customers can explore, filter, and order cakes
-            directly via WhatsApp.
+            personalized page. Customers can explore, sort by minimum order
+            quantity, and order cakes directly via WhatsApp.
           </p>
           <div className="">
-            <input
-              type="text"
-              placeholder="mycakepage/"
-              onChange={(e) => {
-                const value = e.target.value.toLowerCase();
-                const error = validateCustomUrl(value);
-                setUrlError(error);
-                if (!error) checkUrlAvailability(value);
-              }}
-              className="bg-white/10 text-white/70 px-3  max-md:pl-3 py-2 rounded outline-none border border-white/10"
-            />
-            <Link
-              to={"/signup"}
-              className=" py-3 px-2 ml-2 bg-white hover:bg-black border border-white max-md:px-1 hover:text-white rounded-md text-black font-bold cursor-pointer"
-            >
-              Get your CakePage
-            </Link>
+            <div className="flex items-center justify-center">
+              <input
+                type="text"
+                placeholder="mycakepage/"
+                onChange={(e) => {
+                  const value = e.target.value.toLowerCase();
+                  const error = validateCustomUrl(value);
+                  setUrlError(error);
+                  if (!error) checkUrlAvailability(value);
+                }}
+                className="bg-white/10 text-white/70 px-3  max-md:pl-2 max-md:pr-0 py-2 rounded outline-none border border-white/10"
+              />
+              <Link
+                to="/signup"
+                className="fancy-button border border-white px-2 break-inside-avoid py-2 ml-1 rounded-md"
+              >
+                <span className="font-semibold">Get your CakePage</span>
+              </Link>
+            </div>
             {urlError && <p className="text-sm  text-red-400">{urlError}</p>}
             {!urlError && urlAvailable === false && (
               <p className="text-sm text-red-400">URL already taken</p>
@@ -177,18 +179,18 @@ const Home = () => {
       </section>
       <section className="px-6 pt-20 max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
             Why Choose <span style={{ fontFamily: "Alagen" }}>MyCakePage?</span>
           </h2>
-          <div className="grid md:grid-cols-2 gap-10">
-            <div className="p-6 hover:rotate-2 rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20">
+          <div className="grid md:grid-cols-2 gap-10 max-sm:gap-5">
+            <div className="p-6 hover:bg-white/20 rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20">
               <h3 className="text-xl font-semibold mb-2">For Bakers</h3>
-              <ul className="list-disc list-inside max-sm:text-xs text-white/70 space-y-1">
+              <ul className="list-disc list-inside max-sm:text-xs  text-white/70 space-y-1">
                 <li>Showcase categorized cake designs with images</li>
                 <li>Set dynamic pricing per kg and per flavor</li>
                 <li>Attach available flavors to each cake</li>
@@ -199,11 +201,11 @@ const Home = () => {
               </ul>
             </div>
 
-            <div className="p-6 hover:rotate-2 rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20">
+            <div className="p-6 hover:bg-white/20 rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20">
               <h3 className="text-xl font-semibold mb-2">For Customers</h3>
               <ul className="list-disc list-inside max-sm:text-xs text-white/70 space-y-1">
-                <li>Browse beautiful cakes by category or flavor</li>
-                <li>Filter cakes by price, quantity, or flavor</li>
+                <li>Browse beautiful cakes by category</li>
+                <li>Sort cakes by minimum order quantity</li>
                 <li>View dynamic pricing per cake and per kg</li>
                 <li>Fill custom order form with delivery details</li>
                 <li>Include optional message or cake notes</li>
@@ -211,7 +213,7 @@ const Home = () => {
               </ul>
             </div>
 
-            <div className="p-6 hover:rotate-2 rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20">
+            <div className="p-6 hover:bg-white/20 rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20">
               <h3 className="text-xl font-semibold mb-2">Smart Admin Panel</h3>
               <ul className="list-disc list-inside max-sm:text-xs text-white/70 space-y-1">
                 <li>Upload cakes and images via Cloudinary</li>
@@ -222,7 +224,7 @@ const Home = () => {
               </ul>
             </div>
 
-            <div className="p-6 hover:rotate-2 rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20">
+            <div className="p-6 hover:bg-white/20 rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20">
               <h3 className="text-xl font-semibold mb-2">Join the Community</h3>
               <ul className="list-disc list-inside max-sm:text-xs text-white/70 space-y-1">
                 <li>Perfect for home bakers and professionals</li>
@@ -262,7 +264,7 @@ const Home = () => {
               {
                 title: "3. Share & Grow",
                 description:
-                  "Promote your CakePage link and QR code. Let customers explore your cakes, filter by their needs, and order directly via WhatsApp.",
+                  "Promote your CakePage link and QR code. Let customers explore your cakes, sort by minimum order quantity, and order directly via WhatsApp.",
               },
             ].map((step, index) => (
               <div

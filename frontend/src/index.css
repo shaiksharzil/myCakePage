@@ -222,3 +222,56 @@ input[type='number'] {
     transform: translateY(-0.1em);
   }
 }
+
+.fancy-button {
+  outline: none;
+  cursor: pointer;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  background: black;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+}
+
+.fancy-button span {
+  position: relative;
+  z-index: 10;
+  transition: color 0.4s;
+}
+
+.fancy-button:hover span {
+  color: white;
+}
+
+.fancy-button::before {
+  content: "";
+  background: white;
+  position: absolute;
+  top: 0;
+  left: -10%;
+  width: 120%;
+  height: 100%;
+  transform: skew(75deg);
+  z-index: 0;
+  transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+}
+
+.fancy-button:hover::before {
+  transform: translate3d(100%, 0, 0);
+}
+
+.fancy-button::after {
+  display: none;
+}
+::-moz-selection { /* Code for Firefox */
+  color: black;
+  background: white;
+}
+
+::selection {
+  color: black;
+  background: white;
+}
