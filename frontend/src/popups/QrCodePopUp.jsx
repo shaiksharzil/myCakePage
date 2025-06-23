@@ -29,7 +29,7 @@ const QrCodePopUp = ({ url, setShowPopup, profile }) => {
       {
         loading: "Downloading image...",
         success: () => {
-          setTimeout(() => setShowPopup(false), 100); // ✅ Close popup on success
+          setTimeout(() => setShowPopup(false), 100);
           return "Image downloaded!";
         },
         error: "Failed to download image",

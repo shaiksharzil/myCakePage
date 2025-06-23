@@ -61,7 +61,7 @@ const AddCakePopUp = ({ setShowPopup, onCreate, categoryId }) => {
       toast.error("Minimum order quantity must be greater than 0 kg.");
       return;
     }
-    if (extraPrice <= 0) {
+    if (extraPrice < 0) {
       toast.error("Extra price must be greater than ₹0/-.");
       return;
     }

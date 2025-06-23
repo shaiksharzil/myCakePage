@@ -88,7 +88,7 @@ const ProfileCard = ({ setShowQrPopup, setCustomUrl, setProfileData }) => {
 
           <div className="h-12 text-center flex items-center justify-between">
             <div className="ml-2 text-white/70 text-xl">
-              <i className="ri-eye-line"></i> {profile.views/2||0}
+              <i className="ri-eye-line"></i> {profile.views||0}
             </div>
             <Link
               to={"/profileedit"}
