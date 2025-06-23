@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Tilt from "react-parallax-tilt";
 import toast, { Toaster } from "react-hot-toast";
@@ -15,7 +15,6 @@ const Signup = () => {
   const [remember, setRemember] = useState(false);
   const [urlAvailable, setUrlAvailable] = useState(null);
   const { checkAuth } = useAuth();
-  const navigate = useNavigate();
   const [passType, setPassType] = useState("password");
   const [passwordError, setPasswordError] = useState("");
   const [urlError, setUrlError] = useState("");
@@ -54,7 +53,7 @@ const Signup = () => {
       );
 
       await checkAuth();
-      navigate("/createprofile");
+      window.location.href = "/createprofile";
     } catch (err) {
       // console.error("Signup error:", err);
     } finally {

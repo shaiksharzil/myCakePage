@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Tilt from "react-parallax-tilt";
 import toast, { Toaster } from "react-hot-toast";
@@ -14,9 +14,6 @@ const SignIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { checkAuth } = useAuth();
   const Url = import.meta.env.VITE_URL;
-
-
-  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setPassType(passType === "password" ? "text" : "password");
@@ -69,9 +66,9 @@ const SignIn = () => {
       await checkAuth();
 
       if (!profile) {
-        navigate("/createprofile");
+        window.location.href = "/createprofile";
       } else {
-        navigate("/account");
+        window.location.href = "/account";
       }
     } catch (err) {
     } finally {

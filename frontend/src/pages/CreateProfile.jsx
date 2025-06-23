@@ -106,7 +106,7 @@ const CreateProfile = () => {
         }
       );
 
-      navigate("/account");
+      window.location.href = "/account";
     } catch (err) {
       // console.error("Profile creation error:", err);
     } finally {
