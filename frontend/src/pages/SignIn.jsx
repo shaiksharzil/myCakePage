@@ -128,7 +128,7 @@ const SignIn = () => {
                   type="checkbox"
                   checked={remember}
                   onChange={() => setRemember(!remember)}
-                  className="accent-white cursor-pointer h-3 w-3"
+                  className="accent-black cursor-pointer h-3 w-3"
                 />
                 Remember for 30 days
               </label>

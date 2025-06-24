@@ -14,7 +14,6 @@ const CakeCategories = ({ categories, bakeryName }) => {
         await navigator.share({
           title: `${categoryName} – ${bakeryName} | MyCakePage`,
           text: message,
-          url,
         });
       } else {
         await navigator.clipboard.writeText(message);

@@ -191,7 +191,7 @@ const Signup = () => {
               <label className="text-sm text-white/70 cursor-pointer">
                 <input
                   type="checkbox"
-                  className="accent-white cursor-pointer h-3 w-3 mr-1"
+                  className="accent-black cursor-pointer h-3 w-3 mr-1"
                   checked={remember}
                   onChange={(e) => setRemember(e.target.checked)}
                 />
