@@ -43,6 +43,10 @@ const App = () => {
                   background: "#000",
                   color: "#fff",
                 },
+                iconTheme: {
+                  primary: "white",
+                  secondary: "black",
+                },
               }}
             />
             <div className="flex-1">
