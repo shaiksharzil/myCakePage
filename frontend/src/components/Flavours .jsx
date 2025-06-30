@@ -6,7 +6,7 @@ const CakeFlavourCard = ({ flavour, onEdit, onDelete }) => {
 
   return (
     <div className="w-full flex flex-col items-center mt-6 px-3">
-      <div className="w-130 max-md:w-86 shimmer bg-white/10 hover:bg-white/20 z-0 rounded-2xl border border-white/10 shadow-lg backdrop-blur-md text-white px-4 py-3 flex flex-col gap-2 transition-all duration-300">
+      <div className="w-130 max-md:w-86 bg-white/10 hover:bg-white/20 z-0 rounded-2xl border border-white/10 shadow-lg backdrop-blur-md text-white px-4 py-3 flex flex-col gap-2 transition-all duration-300">
         <div className="flex items-center justify-between">
           <div className="flex gap-2 items-center">
             <i className="ri-cake-2-fill text-3xl" />
