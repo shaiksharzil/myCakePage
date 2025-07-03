@@ -133,7 +133,7 @@ const AdminCakesPage = () => {
   return (
     <div className="w-screen px-10 min-h-screen bg-black overflow-x-hidden max-md:px-2">
       {loading ? (
-        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
+        <div className="columns-1 columns-sm-custom-2 md:columns-3 lg:columns-4 gap-4">
           {Array.from({ length: 20 }).map((_, idx) => (
             <SkeletonAdminCakeCard key={idx} />
           ))}
@@ -141,7 +141,7 @@ const AdminCakesPage = () => {
       ) : cakes.length === 0 ? (
         <NoCakes />
       ) : (
-        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
+        <div className="columns-1 columns-sm-custom-2 md:columns-3 lg:columns-4 gap-4">
           {cakes.map((cake, idx) => (
             <AdminCakeCard
               key={idx}

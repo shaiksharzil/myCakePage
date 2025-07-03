@@ -298,3 +298,9 @@ input[type='number'] {
   background-color: rgba(255, 255, 255, 0.7); /* darker on hover */
   cursor: pointer;
 }
+
+@media (min-width: 575px) and (max-width: 767px) {
+  .columns-sm-custom-2 {
+    column-count: 2;
+  }
+}

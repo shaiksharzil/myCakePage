@@ -72,7 +72,7 @@ const CakesPage = () => {
   return (
     <div className="w-screen px-10 min-h-screen bg-black overflow-x-hidden max-md:px-2">
       {loading ? (
-        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
+        <div className="columns-1 columns-sm-custom-2 md:columns-3 lg:columns-4 gap-4">
           {Array.from({ length: 10 }).map((_, idx) => (
             <SkeletonCakeCardCustomer key={idx} />
           ))}
@@ -80,7 +80,7 @@ const CakesPage = () => {
       ) : cakes.length === 0 ? (
         <NoCustomerCakes />
       ) : (
-        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
+        <div className="columns-1 columns-sm-custom-2 md:columns-3 lg:columns-4 gap-4">
           {cakes.map((cake) => (
             <CakeCard key={cake._id} cake={cake} mobile={MobileNo} />
           ))}

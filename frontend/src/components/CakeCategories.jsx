@@ -7,7 +7,7 @@ const CakeCategories = ({ value, onEdit, onDelete }) => {
 
   return (
     <div className="w-full flex flex-col items-center mt-6 px-3">
-      <div className="w-130 max-md:w-86 bg-white/10 shimmer hover:bg-white/20 rounded-2xl border border-white/10 shadow-lg backdrop-blur-md text-white px-4 py-3 flex flex-col gap-2">
+      <div className="w-130 max-md:w-86 bg-white/10 hover:bg-white/20 rounded-2xl border border-white/10 shadow-lg backdrop-blur-md text-white px-4 py-3 flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <Link
             to={`/cakes/${value._id}`}
