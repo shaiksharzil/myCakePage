@@ -33,7 +33,7 @@ app.use("/api/flavours", flavourRoutes);
 app.use("/api/cakes", cakeRoutes);
 
 app.use("/api/public", publicRoutes);
-
+app.get("/ping", (req, res) => res.send("pong"));
 app.post("/send-email", async (req, res) => {
   const { name, email, mobile, message } = req.body;
 
