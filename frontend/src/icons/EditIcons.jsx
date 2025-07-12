@@ -2,7 +2,7 @@ import React, { useRef, useImperativeHandle, forwardRef } from "react";
 import Lottie from "lottie-react";
 import editAnimation from "../iconsJsonFiles/edit.json";
 
-const EditIcon = forwardRef(({ size = 28 }, ref) => {
+const EditIcon = forwardRef(({ size = 25 }, ref) => {
   const lottieRef = useRef();
 
   useImperativeHandle(ref, () => ({

@@ -20,12 +20,12 @@ const AdminCakeCard = (props) => {
         initial={{ opacity: 0.5 }}
         animate={{ opacity: inView ? 1 : 0.5 }}
         transition={{ duration: 1, ease: "easeInOut" }}
-        className="w-full border border-white/10 rounded-2xl backdrop-filter backdrop-blur-md px-5 py-3 my-2"
+        className="w-full border border-white/10 rounded-2xl bg-white/10 px-5 py-3 my-2"
       >
         <div className="overflow-hidden mt-3 mb-1.5 rounded-xl text-center">
           <img
             loading="lazy"
-            className="object-cover cursor-zoom-in transition-transform duration-300 ease-in-out hover:scale-120"
+            className="object-cover mx-auto cursor-zoom-in transition-transform duration-300 ease-in-out hover:scale-120"
             src={src}
             alt=""
           />
@@ -62,7 +62,7 @@ const AdminCakeCard = (props) => {
           Minimum Order Quantity: {minQty} kg
         </p>
         <p className="text-white/70 font-semibold text-xl max-md:text-lg">
-          Extra Price: ₹{extraPrice || 0}/-
+          Extra Price: ₹{extraPrice || 0}
         </p>
 
         <div className="flex items-center justify-between gap-x-1">
@@ -79,7 +79,7 @@ const AdminCakeCard = (props) => {
             onClick={() => onDelete(cake)}
             onMouseEnter={() => trashIconRef.current?.playForward?.()}
             onMouseLeave={() => trashIconRef.current?.playReverse?.()}
-            className="w-1/2 text-xl flex items-center justify-center max-md:text-lg max-md:py-0.5 text-white/70 bg-white/5 hover:bg-white/10 hover:text-white border border-white/10 rounded-md py-1 mt-1 mb-3 font-medium shadow-lg backdrop-filter backdrop-blur-md cursor-pointer"
+            className="w-1/2 text-xl flex items-center justify-center max-md:text-lg text-white/70 bg-white/5 hover:bg-white/10 hover:text-white border border-white/10 rounded-md py-1 mt-1 mb-3 font-medium shadow-lg backdrop-filter backdrop-blur-md cursor-pointer"
           >
             <TrashIcon ref={trashIconRef} size={20} /> <div>Delete</div>
           </button>

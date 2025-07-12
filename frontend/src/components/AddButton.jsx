@@ -4,6 +4,7 @@ import {motion} from 'motion/react';
 const AddButton = ({ onClick }) => {
   return (
     <motion.div
+      drag
       animate={{
         y: -10,
       }}

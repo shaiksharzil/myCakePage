@@ -18,30 +18,25 @@ const AdminCakesPage = () => {
   const [cakes, setCakes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
-  const [showEditPopup, setShowEditPopup] = useState(false);
-  const [cakeToEdit, setCakeToEdit] = useState(null);
   const [editCake, setEditCake] = useState(null);
   const [deleteCake, setDeleteCake] = useState(null);
   const [notfound, setNotfound] = useState("");
+  const [result, setResult] = useState();
+  const [categoryName, setCategoryName] = useState("");
 
   const Url = import.meta.env.VITE_URL;
-
-
-  const handleEditClick = (cake) => {
-    setCakeToEdit(cake);
-    setShowEditPopup(true);
-  };
   const fetchCakes = async () => {
     try {
       setLoading(true);
       const res = await axios.get(`${Url}/api/cakes/${id}`, {
         withCredentials: true,
       });
-      const sorted = res.data.sort(
+      const sorted = res.data.cakes.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
       setCakes(sorted);
-
+      setResult(res.data.cakes.length);
+      setCategoryName(res.data.categoryName.name);
     } catch (err) {
       console.error(
         "Failed to fetch cakes:",
@@ -141,18 +136,23 @@ const AdminCakesPage = () => {
       ) : cakes.length === 0 ? (
         <NoCakes />
       ) : (
-        <div className="columns-1 columns-sm-custom-2 md:columns-3 lg:columns-4 gap-4">
-          {cakes.map((cake, idx) => (
-            <AdminCakeCard
-              key={idx}
-              src={cake.imageUrl}
-              minQty={cake.minOrderQty}
-              extraPrice={cake.extraPrice}
-              cake={cake}
-              onEdit={(cake) => setEditCake(cake)}
-              onDelete={() => setDeleteCake(cake)}
-            />
-          ))}
+        <div>
+          <h3 className="text-xl text-center mb-3 underline font-bold tracking-wide text-zinc-300">
+            {categoryName} — {result} cakes
+          </h3>
+          <div className="columns-1 columns-sm-custom-2 md:columns-3 lg:columns-4 gap-4">
+            {cakes.map((cake, idx) => (
+              <AdminCakeCard
+                key={idx}
+                src={cake.imageUrl}
+                minQty={cake.minOrderQty}
+                extraPrice={cake.extraPrice}
+                cake={cake}
+                onEdit={(cake) => setEditCake(cake)}
+                onDelete={() => setDeleteCake(cake)}
+              />
+            ))}
+          </div>
         </div>
       )}
       {showPopup && (

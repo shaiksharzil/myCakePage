@@ -1,4 +1,5 @@
 const Cake = require("../models/Cake");
+const cakeCategory = require("../models/CakeCategory");
 const cloudinary = require("../config/cloudinary");
 
 exports.createCake = async (req, res) => {
@@ -42,7 +43,8 @@ exports.getCakesByCategory = async (req, res) => {
     const cakes = await Cake.find({ category: categoryId }).populate(
       "flavours"
     );
-    res.status(200).json(cakes);
+    const categoryName = await cakeCategory.findById(categoryId).select("name");
+    res.status(200).json({ cakes, categoryName });
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch cakes" });
   }

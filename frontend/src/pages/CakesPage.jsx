@@ -12,10 +12,11 @@ const CakesPage = () => {
   const { customUrl, categoryId } = useParams();
   const [cakes, setCakes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [flavours, setFlavours] = useState([]);
   const [MobileNo, setMobileNo] = useState("");
   const [notfound, setNotfound] = useState("");
   const [isDescending, setIsDescending] = useState(false);
+  const [result, setResult] = useState();
+  const [categoryName, setCategoryName] = useState("");
 
   const Url = import.meta.env.VITE_URL;
 
@@ -30,7 +31,9 @@ const CakesPage = () => {
       try {
         setLoading(true);
         const res = await axios.get(`${Url}/api/cakes/category/${categoryId}`);
-        setCakes(sortCakes(res.data));
+        setCakes(sortCakes(res.data.cakes));
+        setResult(res.data.cakes.length);
+        setCategoryName(res.data.categoryName.name);
       } catch (error) {
         setNotfound(error.status);
       } finally {
@@ -56,7 +59,7 @@ const CakesPage = () => {
     const sorted = sortCakes(cakes, newOrder);
     setCakes(sorted);
     toast.success(
-      `Sorted by ${newOrder ? "Descending" : "Ascending"} Order Qty`,
+      `Sorted by ${newOrder ? "High to Low" : "Low to High"} Order Qty`,
       {
         style: {
           borderRadius: "10px",
@@ -80,14 +83,20 @@ const CakesPage = () => {
       ) : cakes.length === 0 ? (
         <NoCustomerCakes />
       ) : (
-        <div className="columns-1 columns-sm-custom-2 md:columns-3 lg:columns-4 gap-4">
-          {cakes.map((cake) => (
-            <CakeCard key={cake._id} cake={cake} mobile={MobileNo} />
-          ))}
+        <div>
+          <h3 className="text-xl text-center mb-3 underline font-bold tracking-wide text-zinc-300">
+            {categoryName} — {result} cakes
+          </h3>
+          <div className="columns-1 columns-sm-custom-2 md:columns-3 lg:columns-4 gap-4">
+            {cakes.map((cake) => (
+              <CakeCard key={cake._id} cake={cake} mobile={MobileNo} />
+            ))}
+          </div>
         </div>
       )}
 
       <motion.div
+        drag
         animate={{ y: -10 }}
         transition={{
           duration: 1,

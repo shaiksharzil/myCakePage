@@ -40,18 +40,18 @@ const CakeCard = ({ cake,mobile }) => {
         initial={{ opacity: 0.5 }}
         animate={{ opacity: inView ? 1 : 0.5 }}
         transition={{ duration: 1, ease: "easeInOut" }}
-        className="w-full border border-white/10 rounded-2xl backdrop-filter backdrop-blur-md px-5 py-3 my-2"
+        className="w-full bg-white/10 rounded-2xl px-5 py-3 my-2 shadow-2xl border border-white/20"
       >
         <div className="overflow-hidden mt-3 mb-1.5 rounded-xl text-center">
           <img
             loading="lazy"
-            className="object-cover cursor-zoom-in transition-transform duration-300 ease-in-out hover:scale-120"
+            className="object-cover cursor-zoom-in mx-auto transition-transform duration-300 ease-in-out hover:scale-120"
             src={cake.imageUrl}
             alt="Cake"
           />
         </div>
         {cake.cakeName ? (
-          <div className="text-white/70 text-xl font-medium">
+          <div className="text-white text-sm bg-white/10 w-fit px-1 rounded-md font-medium">
             {cake.cakeName}
           </div>
         ) : (
@@ -59,7 +59,7 @@ const CakeCard = ({ cake,mobile }) => {
         )}
         {cake.flavours?.length > 0 && (
           <div className="flex items-center justify-start gap-3">
-            <div className="text-white/70 text-lg font-medium">Flavours:</div>
+            <div className="text-[#cccccc] text-lg font-bold">Flavour:</div>
             <select
               className="block w-full h-fit py-1 text-sm px-2 border border-white/10 rounded-md bg-white/10 text-white focus:outline-none"
               value={selectedFlavour}
@@ -77,39 +77,42 @@ const CakeCard = ({ cake,mobile }) => {
             </select>
           </div>
         )}
-        <p className="text-white/70 font-medium text-lg mt-1 mb-0.5">
-          Min Order Quantity: {cake.minOrderQty}kg
-        </p>
-
-        <div className="flex items-center justify-start gap-3 mt-1">
-          <p className="text-white/70 text-lg font-medium">Quantity:</p>
-          <div className="flex items-center gap-2 w-full border border-white/10 rounded-md bg-white/10 px-2">
+        <div className="flex items-center justify-start gap-3 mt-2">
+          <p className="text-[#cccccc] text-lg font-bold">Quantity:</p>
+          <div className="flex items-center gap-2 w-full rounded-md border-2 bg-white/10 border-white/20">
             <button
               onClick={decreaseQuantity}
-              className="text-white w-1/2 text-xl font-bold px-2 cursor-pointer hover:text-white/70"
+              className="text-white w-1/3 text-xl font-bold px-2 border-r-2 border-white/20 cursor-pointer hover:bg-white/20"
             >
               -
             </button>
-            <span className="text-white px-2">{quantity}kg</span>
+            <span className="text-white px-2 w-1/2 text-center">
+              {quantity}kg
+            </span>
             <button
               onClick={increaseQuantity}
-              className="text-white w-1/2 text-xl font-bold px-2 cursor-pointer hover:text-white/70"
+              className="text-white w-1/3 hover:bg-white/20 text-xl font-bold px-2 border-l-2 border-white/20 cursor-pointer"
             >
               +
             </button>
           </div>
         </div>
-
-        <p className="text-white/80 font-bold text-xl max-md:text-lg mt-1">
-          Price: ₹{calculatedPrice}/-
-        </p>
-
+        <div className="flex items-center gap-3 mt-1">
+          <p className="text-white font-bold text-xl max-md:text-lg">
+            Price: ₹{calculatedPrice}
+          </p>
+          <p>|</p>
+          <p className="text-[#bdbdbd] font-medium text-sm w-fit bg-white/10 rounded-md px-1 py-0.5">
+            Minimum Order: {cake.minOrderQty}kg
+          </p>
+        </div>
         <div className="flex items-center justify-between gap-x-1">
           <button
             onClick={() => setShowOrderPopup(true)}
-            className=" w-full text-xl max-md:text-lg max-md:py-1 text-white/70 border hover:bg-white/20 hover:text-white border-white/10 rounded-md bg-white/10 py-2 mt-1 mb-3 font-medium shadow-lg backdrop-filter backdrop-blur-md hover:backdrop-blur-none cursor-pointer"
+            className="group w-full text-xl max-md:text-lg max-md:py-1 text-[#222222] rounded-md bg-white py-2 mt-1 mb-1 font-semibold shadow-lg cursor-pointer"
           >
-            Order Now <i className="ri-shopping-cart-2-line"></i>
+            Place Order{" "}
+            <i className="ri-shopping-cart-2-line inline-block transform transition-transform duration-300 group-hover:translate-x-5"></i>
           </button>
         </div>
       </motion.div>

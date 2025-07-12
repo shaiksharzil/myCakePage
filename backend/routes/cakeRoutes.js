@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const Cake = require("../models/Cake");
+const cakeCategory = require("../models/CakeCategory");
 const {
   createCake,
   getCakesByCategory,
   updateCake,
   deleteCake
 } = require("../controllers/cakeController");
-// const upload = require("../middlewares/multer");
 const auth = require("../middleware/auth");
 const upload = require("../middleware/upload");
 
@@ -20,7 +20,8 @@ router.get("/category/:id", async (req, res) => {
     const cakes = await Cake.find({ category: req.params.id }).populate(
       "flavours"
     );
-    res.json(cakes);
+    const categoryName = await cakeCategory.findById(req.params.id).select("name");
+    res.json({cakes, categoryName});
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch cakes" });
   }
