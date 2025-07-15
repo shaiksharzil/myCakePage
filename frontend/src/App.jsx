@@ -18,6 +18,7 @@ import { ProfileProvider } from "./context/ProfileContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
 import Loader from './loaders/Loader';
+import usePageTracking from "./hooks/usePageTracking";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -33,6 +34,7 @@ const App = () => {
     <AuthProvider>
       <ProfileProvider>
         <Router>
+          {usePageTracking()}
           <div className="flex flex-col min-h-screen bg-black text-white overflow-x-hidden">
             <Nav />
             <Toaster
