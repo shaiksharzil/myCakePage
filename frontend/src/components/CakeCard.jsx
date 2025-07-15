@@ -50,6 +50,9 @@ const CakeCard = ({ cake,mobile }) => {
             alt="Cake"
           />
         </div>
+        <p className="text-white font-medium text-sm w-fit bg-yellow-500 rounded-md px-1 py-0.5 mb-2">
+          Minimum Order Quantity: {cake.minOrderQty}kg
+        </p>
         {cake.cakeName ? (
           <div className="text-white text-sm bg-white/10 w-fit px-1 rounded-md font-medium">
             {cake.cakeName}
@@ -97,15 +100,9 @@ const CakeCard = ({ cake,mobile }) => {
             </button>
           </div>
         </div>
-        <div className="flex items-center gap-3 mt-1">
-          <p className="text-white font-bold text-xl max-md:text-lg">
+          <p className="text-white font-bold text-xl">
             Price: ₹{calculatedPrice}
           </p>
-          <p>|</p>
-          <p className="text-[#bdbdbd] font-medium text-sm w-fit bg-white/10 rounded-md px-1 py-0.5">
-            Minimum Order: {cake.minOrderQty}kg
-          </p>
-        </div>
         <div className="flex items-center justify-between gap-x-1">
           <button
             onClick={() => setShowOrderPopup(true)}

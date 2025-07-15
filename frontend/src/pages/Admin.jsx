@@ -126,23 +126,28 @@ const Admin = () => {
       )}
 
       <AddButton onClick={() => setShowPopup(true)} />
-      <div className="w-screen flex flex-col gap-3 justify-center items-center mt-5">
+      <div className="w-screen flex flex-col gap-3 justify-center items-center mt-3">
+        <div className="w-130 flex items-center px-2 max-md:w-86">
+          <h3 className="text-white/70 font-bold text-xl">
+            Quick Actions:
+          </h3>
+        </div>
         <Link
           to={"/flavours"}
-          className="w-130 h-15 rounded-xl bg-white/10 hover:bg-white/20 cursor-pointer flex text-white items-center justify-center px-2 max-md:w-86 border border-white/10 shadow-lg backdrop-filter backdrop-blur-md"
+          className="w-130 py-3 rounded-xl bg-white/10 hover:bg-white/20 cursor-pointer flex text-white items-center px-2 max-md:w-86 border border-white/10 shadow-lg backdrop-filter backdrop-blur-md"
         >
-          <div className="font-bold text-xl  cursor-pointer">
-            Manage Cake Flavours{" "}
-            <i className="ri-external-link-line text-2xl ml-2"></i>
+          <div className="font-semibold text-lg  cursor-pointer">
+            <i class="ri-edit-2-line font-extralight text-xl mx-2"></i>
+            Manage Cake Flavours
           </div>
         </Link>
         <Link
           to={`/${customUrl}`}
-          className="w-130 h-15 rounded-xl bg-white/10 hover:bg-white/20 cursor-pointer flex text-white items-center justify-center px-2 max-md:w-86 border border-white/10 shadow-lg backdrop-filter backdrop-blur-md"
+          className="w-130 py-3 rounded-xl bg-white/10 hover:bg-white/20 cursor-pointer flex text-white items-center px-2 max-md:w-86 border border-white/10 shadow-lg backdrop-filter backdrop-blur-md"
         >
-          <div className="font-bold text-xl  cursor-pointer">
-            Visit Your Cake Page{" "}
-            <i className="ri-external-link-line text-2xl ml-2"></i>
+          <div className="font-semibold text-lg  cursor-pointer">
+            <i class="ri-computer-line text-xl font-extralight mx-2"></i>
+            Visit Your Cake Page
           </div>
         </Link>
       </div>

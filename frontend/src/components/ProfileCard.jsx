@@ -109,7 +109,7 @@ const ProfileCard = ({ setShowQrPopup, setCustomUrl, setProfileData }) => {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className=" px-2 text-sm my-1 text-center cursor-pointer block  text-white/80"
+              className=" px-2 text-sm my-1 text-center cursor-pointer block text-white/80"
             >
               <i className="ri-map-pin-line mr-1"></i> {profile.address}
             </a>

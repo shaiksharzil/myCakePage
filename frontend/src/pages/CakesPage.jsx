@@ -96,7 +96,6 @@ const CakesPage = () => {
       )}
 
       <motion.div
-        drag
         animate={{ y: -10 }}
         transition={{
           duration: 1,
