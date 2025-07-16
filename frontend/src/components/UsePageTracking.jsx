@@ -13,6 +13,8 @@ const usePageTracking = () => {
       page_title: document.title,
     });
   }, [location]);
+
+  return null; // nothing is rendered
 };
 
 export default usePageTracking;
