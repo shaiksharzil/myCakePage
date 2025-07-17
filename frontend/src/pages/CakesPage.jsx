@@ -7,6 +7,7 @@ import SkeletonCakeCardCustomer from "../loaders/SkeletonCakeCardCustomer";
 import NoCustomerCakes from "../components/NoCustomerCakes";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import FilterPopup from "../popups/FilterPopup";
 
 const CakesPage = () => {
   const { customUrl, categoryId } = useParams();
@@ -14,25 +15,22 @@ const CakesPage = () => {
   const [loading, setLoading] = useState(true);
   const [MobileNo, setMobileNo] = useState("");
   const [notfound, setNotfound] = useState("");
-  const [isDescending, setIsDescending] = useState(false);
-  const [result, setResult] = useState();
   const [categoryName, setCategoryName] = useState("");
-
+  const [showFilter, setShowFilter] = useState(false);
+  const [filterFlavours, setFilterFlavours] = useState([]); 
+  const [qty, setQty] = useState([]);
+  const [cakesData, setCakesData] = useState([])
   const Url = import.meta.env.VITE_URL;
 
-  const sortCakes = (cakes, descending = false) => {
-    return [...cakes].sort((a, b) =>
-      descending ? b.minOrderQty - a.minOrderQty : a.minOrderQty - b.minOrderQty
-    );
-  };
 
   useEffect(() => {
     const fetchCakes = async () => {
       try {
         setLoading(true);
         const res = await axios.get(`${Url}/api/cakes/category/${categoryId}`);
-        setCakes(sortCakes(res.data.cakes));
-        setResult(res.data.cakes.length);
+        setCakes(res.data.cakes.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+        setCakesData(res.data.cakes);
         setCategoryName(res.data.categoryName.name);
       } catch (error) {
         setNotfound(error.status);
@@ -51,27 +49,80 @@ const CakesPage = () => {
       .catch((err) => {
         console.error("Failed to load profile data:", err);
       });
-  }, [categoryId, customUrl]);
+  }, [categoryId, customUrl]); 
 
-  const toggleSortOrder = () => {
-    const newOrder = !isDescending;
-    setIsDescending(newOrder);
-    const sorted = sortCakes(cakes, newOrder);
-    setCakes(sorted);
-    toast.success(
-      `Sorted by ${newOrder ? "High to Low" : "Low to High"} Order Qty`,
-      {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
+
+  let obj = {};
+  let temp = [];
+  let tempQty = [];
+  let qtyObj = {};
+  const handleFlavoursAndMinOrderQty = () => {
+    for (let i = 0; i < cakesData.length; i++) {
+      if (qtyObj[cakesData[i].minOrderQty] == undefined) {
+        tempQty.push(cakesData[i].minOrderQty);
+        qtyObj[cakesData[i].minOrderQty] = true;
       }
-    );
+        for (let j = 0; j < cakesData[i].flavours.length; j++) {
+          if (obj[cakesData[i].flavours[j]._id] == undefined) {
+            temp.push(cakesData[i].flavours[j]);
+            obj[cakesData[i].flavours[j]._id] = true;
+          }
+        }
+    }
+    setFilterFlavours(temp);
+    setShowFilter(true);
+    setQty([...tempQty].sort((a, b) => a - b));
   };
 
-  if (notfound === 500) return <NotFound />;
+  const handleFilter = (filters) => {
+    let filteredCakes = cakesData.filter(x => x.minOrderQty >= filters.minQty && x.minOrderQty <= filters.maxQty);
+    let filteredFlavours = [];
+    let matchingFlavours = [];
+    if (filters.selectedFlavours.length !== 0) {
+      for (let i = 0; i < filteredCakes.length; i++) {
+        for (let j = 0; j < filteredCakes[i].flavours.length; j++) {
+          for (let k = 0; k < filters.selectedFlavours.length; k++) {
+            if (filters.selectedFlavours[k] == filteredCakes[i].flavours[j]._id) {
+              matchingFlavours.push(filteredCakes[i].flavours[j]);
+            }
+          }
+        }
+        if (matchingFlavours.length > 0) {
+          filteredFlavours.push({
+            ...filteredCakes[i],
+            flavours: [...matchingFlavours],
+          });
 
+          matchingFlavours = [];
+        }
+      }
+      setCakes(filteredFlavours);
+    } else {
+      setCakes(filteredCakes);
+    }
+    if (filters.sortBy == "qtyLowHigh")
+      setCakes(cakes.sort((a, b) => a.minOrderQty - b.minOrderQty));
+    else if (filters.sortBy == "qtyHighLow")
+      setCakes(cakes.sort((a, b) => b.minOrderQty - a.minOrderQty));
+    else if (filters.sortBy === "priceLowHigh") {
+      setCakes(
+        [...cakes].sort((a, b) => {
+          const aPrice = (a.flavours[0].pricePerKg + a.extraPrice) * a.minOrderQty;
+          const bPrice = (b.flavours[0].pricePerKg + b.extraPrice) * b.minOrderQty;
+          return aPrice - bPrice;
+        })
+      );
+    } else if (filters.sortBy === "priceHighLow") {
+      setCakes(
+        [...cakes].sort((a, b) => {
+          const aPrice = (a.flavours[0].pricePerKg + a.extraPrice) * a.minOrderQty;
+          const bPrice = (b.flavours[0].pricePerKg + b.extraPrice) * b.minOrderQty;
+          return bPrice - aPrice;
+        })
+      );
+    }
+  }
+  if (notfound === 500) return <NotFound />;
   return (
     <div className="w-screen px-10 min-h-screen bg-black overflow-x-hidden max-md:px-2">
       {loading ? (
@@ -84,8 +135,8 @@ const CakesPage = () => {
         <NoCustomerCakes />
       ) : (
         <div>
-          <h3 className="text-xl text-center mb-3 underline font-bold tracking-wide text-zinc-300">
-            {categoryName} — {result} cakes
+          <h3 className="text-xl text-center  mb-3 font-bold tracking-wide">
+            {categoryName} — {cakes.length} cakes
           </h3>
           <div className="columns-1 columns-sm-custom-2 md:columns-3 lg:columns-4 gap-4">
             {cakes.map((cake) => (
@@ -94,7 +145,16 @@ const CakesPage = () => {
           </div>
         </div>
       )}
-
+      {showFilter && (
+        <FilterPopup
+          flavours={filterFlavours}
+          qty={qty}
+          onClose={() => setShowFilter(false)}
+          onApply={(filters) => {
+            handleFilter(filters);
+          }}
+        />
+      )}
       <motion.div
         animate={{ y: -10 }}
         transition={{
@@ -104,13 +164,9 @@ const CakesPage = () => {
           ease: "easeInOut",
         }}
         className="h-20 fixed right-0 w-20 rounded-full z-1 shimmer border border-white/10 shadow-lg backdrop-filter backdrop-blur-md bottom-0 mb-5 mr-5 text-4xl flex items-center justify-center cursor-pointer max-md:h-15 max-md:w-15"
-        onClick={toggleSortOrder}
+        onClick={handleFlavoursAndMinOrderQty}
       >
-        <i
-          className={
-            isDescending ? "ri-sort-number-desc" : "ri-sort-number-asc"
-          }
-        ></i>
+        <i class="ri-filter-2-line"></i>
       </motion.div>
     </div>
   );

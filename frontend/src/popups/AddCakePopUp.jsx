@@ -3,18 +3,17 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const AddCakePopUp = ({ setShowPopup, onCreate, categoryId }) => {
+const AddCakePopUp = ({ setShowPopup, onCreate, prevFlavours, categoryId }) => {
   const [preview, setPreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [minQty, setMinQty] = useState("");
   const [extraPrice, setExtraPrice] = useState("");
   const [flavours, setFlavours] = useState([]);
-  const [selectedFlavours, setSelectedFlavours] = useState([]);
+  const [selectedFlavours, setSelectedFlavours] = useState(prevFlavours);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [cakeName, setCakeName] = useState("");
   const navigate = useNavigate();
   const Url = import.meta.env.VITE_URL;
-
   useEffect(() => {
     const fetchFlavours = async () => {
       try {

@@ -23,6 +23,7 @@ const AdminCakesPage = () => {
   const [notfound, setNotfound] = useState("");
   const [result, setResult] = useState();
   const [categoryName, setCategoryName] = useState("");
+  const [prevFlavours, setPrevFlavours] = useState([]);
 
   const Url = import.meta.env.VITE_URL;
   const fetchCakes = async () => {
@@ -47,7 +48,6 @@ const AdminCakesPage = () => {
       setLoading(false);
     }
   };
-
   const handleCreateCake = async (formData) => {
     try {
       await toast.promise(
@@ -137,7 +137,9 @@ const AdminCakesPage = () => {
         <NoCakes />
       ) : (
         <div>
-          <h3 className="text-xl text-center mb-3 underline font-bold tracking-wide text-zinc-300">
+          <h3
+            className="text-xl text-center mb-3 underline font-bold tracking-wide text-zinc-300"
+          >
             {categoryName} — {result} cakes
           </h3>
           <div className="columns-1 columns-sm-custom-2 md:columns-3 lg:columns-4 gap-4">
@@ -159,6 +161,7 @@ const AdminCakesPage = () => {
         <AddCakePopUp
           setShowPopup={setShowPopup}
           onCreate={handleCreateCake}
+          prevFlavours={prevFlavours}
           categoryId={id}
         />
       )}
@@ -176,7 +179,10 @@ const AdminCakesPage = () => {
           onDelete={handleDeleteCake}
         />
       )}
-      <AddButton onClick={() => setShowPopup(true)} />
+      {loading ? (<></>) : (<AddButton onClick={() => {
+        if (cakes.length > 0) setPrevFlavours(cakes[0].flavours.map((x) => x._id));
+        setShowPopup(true)
+      }} />)}
     </div>
   );
 };
