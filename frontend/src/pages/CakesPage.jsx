@@ -8,6 +8,7 @@ import NoCustomerCakes from "../components/NoCustomerCakes";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import FilterPopup from "../popups/FilterPopup";
+import FilterIcon from "../icons/FilterIcon";
 
 const CakesPage = () => {
   const { customUrl, categoryId } = useParams();
@@ -17,9 +18,9 @@ const CakesPage = () => {
   const [notfound, setNotfound] = useState("");
   const [categoryName, setCategoryName] = useState("");
   const [showFilter, setShowFilter] = useState(false);
-  const [filterFlavours, setFilterFlavours] = useState([]); 
+  const [filterFlavours, setFilterFlavours] = useState([]);
   const [qty, setQty] = useState([]);
-  const [cakesData, setCakesData] = useState([])
+  const [cakesData, setCakesData] = useState([]);
   const [filterState, setFilterState] = useState({
     selectedFlavours: [],
     minQty: null,
@@ -28,14 +29,16 @@ const CakesPage = () => {
   });
   const Url = import.meta.env.VITE_URL;
 
-
   useEffect(() => {
     const fetchCakes = async () => {
       try {
         setLoading(true);
         const res = await axios.get(`${Url}/api/cakes/category/${categoryId}`);
-        setCakes(res.data.cakes.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+        setCakes(
+          res.data.cakes.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          )
+        );
         setCakesData(res.data.cakes);
         setCategoryName(res.data.categoryName.name);
       } catch (error) {
@@ -55,8 +58,7 @@ const CakesPage = () => {
       .catch((err) => {
         console.error("Failed to load profile data:", err);
       });
-  }, [categoryId, customUrl]); 
-
+  }, [categoryId, customUrl]);
 
   let obj = {};
   let temp = [];
@@ -68,12 +70,12 @@ const CakesPage = () => {
         tempQty.push(cakesData[i].minOrderQty);
         qtyObj[cakesData[i].minOrderQty] = true;
       }
-        for (let j = 0; j < cakesData[i].flavours.length; j++) {
-          if (obj[cakesData[i].flavours[j]._id] == undefined) {
-            temp.push(cakesData[i].flavours[j]);
-            obj[cakesData[i].flavours[j]._id] = true;
-          }
+      for (let j = 0; j < cakesData[i].flavours.length; j++) {
+        if (obj[cakesData[i].flavours[j]._id] == undefined) {
+          temp.push(cakesData[i].flavours[j]);
+          obj[cakesData[i].flavours[j]._id] = true;
         }
+      }
     }
     setFilterFlavours(temp);
     setShowFilter(true);
@@ -166,8 +168,13 @@ const CakesPage = () => {
           qty={qty}
           onClose={() => setShowFilter(false)}
           initialFilter={filterState}
-          onApply={(filters) => {
+          onApply={(filters,fromReset) => {
             handleFilter(filters);
+            if (fromReset) {
+              toast.success("Filters reset to default.");
+            } else {
+              toast.success("Showing cakes based on selected filters.");
+            }
           }}
         />
       )}
@@ -185,7 +192,8 @@ const CakesPage = () => {
           className="h-20 fixed right-0 w-20 rounded-full z-1 shimmer border border-white/10 shadow-lg backdrop-filter backdrop-blur-md bottom-0 mb-5 mr-5 text-4xl flex items-center justify-center cursor-pointer max-md:h-15 max-md:w-15"
           onClick={handleFlavoursAndMinOrderQty}
         >
-          <i class="ri-filter-2-line"></i>
+          {/* <i class="ri-filter-2-line"></i> */}
+          <FilterIcon />
         </motion.div>
       )}
     </div>

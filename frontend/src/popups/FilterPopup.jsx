@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const FilterPopup = ({ flavours, onClose, onApply, qty, initialFilter }) => {
   const [selectedFlavours, setSelectedFlavours] = useState(initialFilter?.selectedFlavours || []);
@@ -17,13 +18,27 @@ const FilterPopup = ({ flavours, onClose, onApply, qty, initialFilter }) => {
       prev.includes(id) ? prev.filter((fid) => fid !== id) : [...prev, id]
     );
   };
+  const resetFilter = () => {
+    setSelectedFlavours([]);
+    setMinQty(qty[0]);
+    setSortBy("newestFirst");
+    setMaxQty(qty[qty.length - 1]);
+    setMinIndex(0);
+    setMaxIndex(qty.length - 1);
+    onApply({
+      minQty: qty[0],
+      maxQty: qty[qty.length - 1],
+      selectedFlavours:[],
+      sortBy:"newestFirst"
+    },true);
+  }
   const handleApply = () => {
     onApply({
       minQty: qty[minIndex],
       maxQty: qty[maxIndex],
       selectedFlavours,
       sortBy,
-    });
+    },false);
 
     onClose();
   };
@@ -38,7 +53,13 @@ const FilterPopup = ({ flavours, onClose, onApply, qty, initialFilter }) => {
           <i className="ri-close-line cursor-pointer"></i>
         </button>
         <h2 className="text-xl font-bold mb-4 text-center">Filter Cakes</h2>
-
+        <button
+          onClick={resetFilter}
+          className="cursor-pointer text-white bg-red-400 hover:bg-red-500 font-light text-sm absolute right-4 top-13 px-1.5 rounded-md py-1"
+        >
+          <i class="ri-reset-right-fill font-extralight"></i>{" "}
+          Reset
+        </button>
         <div className="flex flex-col gap-4">
           {/* Dual Qty Range Slider */}
           <div>
@@ -70,7 +91,7 @@ const FilterPopup = ({ flavours, onClose, onApply, qty, initialFilter }) => {
                     setMinIndex(newIndex);
                     setMinQty(qty[newIndex]);
                   }}
-                  className="absolute w-full appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:mt-[-6px] [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full"
+                  className="absolute w-full cursor-pointer appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:mt-[-6px] [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full"
                 />
 
                 {/* Right thumb */}
@@ -88,7 +109,7 @@ const FilterPopup = ({ flavours, onClose, onApply, qty, initialFilter }) => {
                     setMaxIndex(newIndex);
                     setMaxQty(qty[newIndex]);
                   }}
-                  className="absolute w-full appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:mt-[-6px] [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full"
+                  className="absolute w-full cursor-pointer appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:mt-[-6px] [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full"
                 />
               </div>
 
@@ -107,7 +128,7 @@ const FilterPopup = ({ flavours, onClose, onApply, qty, initialFilter }) => {
                 {flavours.map((flavour) => (
                   <div
                     key={flavour._id}
-                    className="flex items-center gap-2 bg-white/10 px-2 py-1 rounded-xl cursor-pointer"
+                    className="flex items-center cursor-pointer gap-2 bg-white/10 px-2 py-1 rounded-xl cursor-pointer"
                     onClick={() => handleFlavourToggle(flavour._id)}
                   >
                     <input
@@ -130,7 +151,7 @@ const FilterPopup = ({ flavours, onClose, onApply, qty, initialFilter }) => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-[#464646] border border-white/20 p-2 rounded-xl text-sm text-white w-full mt-1 outline-none"
+              className="bg-[#464646] cursor-pointer border border-white/20 p-2 rounded-xl text-sm text-white w-full mt-1 outline-none"
             >
               <option value="newestFirst">Newest First</option>
               <option value="priceLowHigh">Price: Low to High</option>
@@ -143,7 +164,7 @@ const FilterPopup = ({ flavours, onClose, onApply, qty, initialFilter }) => {
           {/* Apply Button */}
           <button
             onClick={handleApply}
-            className="mt-4 bg-white/20 hover:bg-white/30 text-white font-semibold py-2 rounded-xl transition"
+            className=" bg-white/20 hover:bg-white/30 cursor-pointer text-white font-semibold py-2 rounded-xl transition"
           >
             Apply Filters
           </button>
