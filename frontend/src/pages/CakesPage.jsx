@@ -20,6 +20,12 @@ const CakesPage = () => {
   const [filterFlavours, setFilterFlavours] = useState([]); 
   const [qty, setQty] = useState([]);
   const [cakesData, setCakesData] = useState([])
+  const [filterState, setFilterState] = useState({
+    selectedFlavours: [],
+    minQty: null,
+    maxQty: null,
+    sortBy: "newestFirst",
+  });
   const Url = import.meta.env.VITE_URL;
 
 
@@ -75,14 +81,20 @@ const CakesPage = () => {
   };
 
   const handleFilter = (filters) => {
-    let filteredCakes = cakesData.filter(x => x.minOrderQty >= filters.minQty && x.minOrderQty <= filters.maxQty);
-    let filteredFlavours = [];
-    let matchingFlavours = [];
+    setFilterState(filters);
+    let filteredCakes = cakesData.filter(
+      (x) => x.minOrderQty >= filters.minQty && x.minOrderQty <= filters.maxQty
+    );
+
     if (filters.selectedFlavours.length !== 0) {
+      let filteredFlavours = [];
       for (let i = 0; i < filteredCakes.length; i++) {
+        let matchingFlavours = [];
         for (let j = 0; j < filteredCakes[i].flavours.length; j++) {
           for (let k = 0; k < filters.selectedFlavours.length; k++) {
-            if (filters.selectedFlavours[k] == filteredCakes[i].flavours[j]._id) {
+            if (
+              filters.selectedFlavours[k] === filteredCakes[i].flavours[j]._id
+            ) {
               matchingFlavours.push(filteredCakes[i].flavours[j]);
             }
           }
@@ -92,36 +104,37 @@ const CakesPage = () => {
             ...filteredCakes[i],
             flavours: [...matchingFlavours],
           });
-
-          matchingFlavours = [];
         }
       }
-      setCakes(filteredFlavours);
-    } else {
-      setCakes(filteredCakes);
+      filteredCakes = filteredFlavours;
     }
-    if (filters.sortBy == "qtyLowHigh")
-      setCakes(cakes.sort((a, b) => a.minOrderQty - b.minOrderQty));
-    else if (filters.sortBy == "qtyHighLow")
-      setCakes(cakes.sort((a, b) => b.minOrderQty - a.minOrderQty));
-    else if (filters.sortBy === "priceLowHigh") {
-      setCakes(
-        [...cakes].sort((a, b) => {
-          const aPrice = (a.flavours[0].pricePerKg + a.extraPrice) * a.minOrderQty;
-          const bPrice = (b.flavours[0].pricePerKg + b.extraPrice) * b.minOrderQty;
-          return aPrice - bPrice;
-        })
-      );
+    // Now apply sorting on the filtered result
+    if (filters.sortBy === "qtyLowHigh") {
+      filteredCakes.sort((a, b) => a.minOrderQty - b.minOrderQty);
+    } else if (filters.sortBy === "qtyHighLow") {
+      filteredCakes.sort((a, b) => b.minOrderQty - a.minOrderQty);
+    } else if (filters.sortBy === "priceLowHigh") {
+      filteredCakes.sort((a, b) => {
+        const aPrice =
+          (a.flavours[0].pricePerKg + a.extraPrice) * a.minOrderQty;
+        const bPrice =
+          (b.flavours[0].pricePerKg + b.extraPrice) * b.minOrderQty;
+        return aPrice - bPrice;
+      });
     } else if (filters.sortBy === "priceHighLow") {
-      setCakes(
-        [...cakes].sort((a, b) => {
-          const aPrice = (a.flavours[0].pricePerKg + a.extraPrice) * a.minOrderQty;
-          const bPrice = (b.flavours[0].pricePerKg + b.extraPrice) * b.minOrderQty;
-          return bPrice - aPrice;
-        })
-      );
+      filteredCakes.sort((a, b) => {
+        const aPrice =
+          (a.flavours[0].pricePerKg + a.extraPrice) * a.minOrderQty;
+        const bPrice =
+          (b.flavours[0].pricePerKg + b.extraPrice) * b.minOrderQty;
+        return bPrice - aPrice;
+      });
     }
-  }
+
+    // Final set
+    setCakes(filteredCakes);
+  };
+
   if (notfound === 500) return <NotFound />;
   return (
     <div className="w-screen px-10 min-h-screen bg-black overflow-x-hidden max-md:px-2">
@@ -135,9 +148,11 @@ const CakesPage = () => {
         <NoCustomerCakes />
       ) : (
         <div>
-          <h3 className="text-xl text-center  mb-3 font-bold tracking-wide">
-            {categoryName} — {cakes.length} cakes
-          </h3>
+          <div className="flex justify-center items-center my-1">
+            <h3 className="text-xl text-center font-mono bg-white/10 px-2 py-1 rounded-md w-fit tracking-wide text-white">
+              {categoryName} — {cakes.length} cakes
+            </h3>
+          </div>
           <div className="columns-1 columns-sm-custom-2 md:columns-3 lg:columns-4 gap-4">
             {cakes.map((cake) => (
               <CakeCard key={cake._id} cake={cake} mobile={MobileNo} />
@@ -150,24 +165,29 @@ const CakesPage = () => {
           flavours={filterFlavours}
           qty={qty}
           onClose={() => setShowFilter(false)}
+          initialFilter={filterState}
           onApply={(filters) => {
             handleFilter(filters);
           }}
         />
       )}
-      <motion.div
-        animate={{ y: -10 }}
-        transition={{
-          duration: 1,
-          repeatType: "reverse",
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="h-20 fixed right-0 w-20 rounded-full z-1 shimmer border border-white/10 shadow-lg backdrop-filter backdrop-blur-md bottom-0 mb-5 mr-5 text-4xl flex items-center justify-center cursor-pointer max-md:h-15 max-md:w-15"
-        onClick={handleFlavoursAndMinOrderQty}
-      >
-        <i class="ri-filter-2-line"></i>
-      </motion.div>
+      {loading ? (
+        <></>
+      ) : (
+        <motion.div
+          animate={{ y: -10 }}
+          transition={{
+            duration: 1,
+            repeatType: "reverse",
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="h-20 fixed right-0 w-20 rounded-full z-1 shimmer border border-white/10 shadow-lg backdrop-filter backdrop-blur-md bottom-0 mb-5 mr-5 text-4xl flex items-center justify-center cursor-pointer max-md:h-15 max-md:w-15"
+          onClick={handleFlavoursAndMinOrderQty}
+        >
+          <i class="ri-filter-2-line"></i>
+        </motion.div>
+      )}
     </div>
   );
 };

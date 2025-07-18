@@ -16,19 +16,35 @@ const CakeCard = ({ cake,mobile }) => {
     name: "",
     pricePerKg: 0,
   });
-
   useEffect(() => {
     if (!cake.flavours || cake.flavours.length === 0) return;
 
-    const flavourObj = cake.flavours.find((fl) => fl._id === selectedFlavour);
+    let validFlavourId = selectedFlavour;
+
+    // If selectedFlavour is not in available list, reset to first one
+    const exists = cake.flavours.some(
+      (fl) => String(fl._id) === String(selectedFlavour)
+    );
+
+    if (!exists) {
+      validFlavourId = String(cake.flavours[0]._id);
+      setSelectedFlavour(validFlavourId);
+    }
+
+    const flavourObj = cake.flavours.find(
+      (fl) => String(fl._id) === String(validFlavourId)
+    );
+
     const flavourPrice = flavourObj?.pricePerKg || 0;
     const finalPrice = (flavourPrice + (cake.extraPrice || 0)) * quantity;
+
     setCalculatedPrice(finalPrice);
     setFlavourDetails({
       name: flavourObj?.name || "",
       pricePerKg: flavourPrice,
     });
   }, [selectedFlavour, quantity, cake]);
+
 
   const increaseQuantity = () => setQuantity((prev) => prev + 0.5);
   const decreaseQuantity = () =>

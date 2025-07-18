@@ -137,11 +137,11 @@ const AdminCakesPage = () => {
         <NoCakes />
       ) : (
         <div>
-          <h3
-            className="text-xl text-center mb-3 underline font-bold tracking-wide text-zinc-300"
-          >
-            {categoryName} — {result} cakes
-          </h3>
+          <div className="flex justify-center items-center my-1">
+            <h3 className="text-xl text-center font-mono bg-white/10 px-2 py-1 rounded-md w-fit tracking-wide text-white">
+              {categoryName} — {result} cakes
+            </h3>
+          </div>
           <div className="columns-1 columns-sm-custom-2 md:columns-3 lg:columns-4 gap-4">
             {cakes.map((cake, idx) => (
               <AdminCakeCard
@@ -179,10 +179,17 @@ const AdminCakesPage = () => {
           onDelete={handleDeleteCake}
         />
       )}
-      {loading ? (<></>) : (<AddButton onClick={() => {
-        if (cakes.length > 0) setPrevFlavours(cakes[0].flavours.map((x) => x._id));
-        setShowPopup(true)
-      }} />)}
+      {loading ? (
+        <></>
+      ) : (
+        <AddButton
+          onClick={() => {
+            if (cakes.length > 0)
+              setPrevFlavours(cakes[0].flavours.map((x) => x._id));
+            setShowPopup(true);
+          }}
+        />
+      )}
     </div>
   );
 };

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 
-const FilterPopup = ({ flavours, onClose, onApply, qty }) => {
-  const [selectedFlavours, setSelectedFlavours] = useState([]);
-  const [sortBy, setSortBy] = useState("newestFirst");
+const FilterPopup = ({ flavours, onClose, onApply, qty, initialFilter }) => {
+  const [selectedFlavours, setSelectedFlavours] = useState(initialFilter?.selectedFlavours || []);
+  const [sortBy, setSortBy] = useState(initialFilter?.sortBy || "newestFirst");
 
+  const [minQty, setMinQty] = useState(initialFilter?.minQty ?? qty[0]);
+  const [maxQty, setMaxQty] = useState(
+    initialFilter?.maxQty ?? qty[qty.length - 1]
+  );
 
-  const [minQty, setMinQty] = useState(qty[0]);
-  const [maxQty, setMaxQty] = useState(qty[qty.length - 1]);
-
-  // Convert qty values to indexes for the slider
-  const [minIndex, setMinIndex] = useState(0);
-  const [maxIndex, setMaxIndex] = useState(qty.length - 1);
+  const [minIndex, setMinIndex] = useState(qty.findIndex((q) => q === minQty));
+  const [maxIndex, setMaxIndex] = useState(qty.findIndex((q) => q === maxQty));
 
   const handleFlavourToggle = (id) => {
     setSelectedFlavours((prev) =>
