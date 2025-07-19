@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { debounce } from "lodash";
 import axios from "axios";
+import { Helmet } from "react-helmet";
 
 const Home = () => {
   const [urlAvailable, setUrlAvailable] = useState(null);
@@ -85,6 +86,30 @@ const Home = () => {
 
   return (
     <main className="bg-black text-white min-h-screen overflow-x-hidden">
+      <Helmet>
+        <title>MyCakePage</title>
+        <meta
+          name="description"
+          content="A smart platform for bakers to showcase cakes, set prices, and receive WhatsApp orders via personalized CakePages."
+        />
+        <meta
+          name="keywords"
+          content="cakepage, mycakepage, cake website, bakery online, cakes, order cakes online, showcase cakes, cake flavors"
+        />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://mycakepage.vercel.app/" />
+        <script type="application/ld+json">
+          {`
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "MyCakePage",
+    "url": "https://mycakepage.vercel.app",
+    "description": "A digital cake gallery for bakers to display and sell cakes online via a unique CakePage."
+  }
+  `}
+        </script>
+      </Helmet>
       {/* Hero Section */}
       <Toaster />
       <section className="relative min-h-screen flex items-center justify-center px-6 max-md:px-2">
@@ -120,13 +145,13 @@ const Home = () => {
                   setUrlError(error);
                   if (!error) checkUrlAvailability(value);
                 }}
-                className="bg-white/10 text-white/70 px-3  max-md:pl-2 max-md:pr-0 py-2 rounded outline-none border border-white/10"
+                className="bg-white/10 text-white/70 px-3 py-2 rounded outline-none border border-white/10"
               />
               <Link
                 to="/signup"
                 className="fancy-button border border-white px-2 break-inside-avoid py-2 ml-1 rounded-md"
               >
-                <span className="font-semibold">Get your CakePage</span>
+                <span className="font-semibold">Claim CakePage</span>
               </Link>
             </div>
             {urlError && <p className="text-sm  text-red-400">{urlError}</p>}
