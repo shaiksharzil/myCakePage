@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import EditImagePopUp from "./EditImagePopUp";
 
 const AddCakePopUp = ({ setShowPopup, onCreate, prevFlavours, categoryId }) => {
   const [preview, setPreview] = useState(null);
@@ -12,6 +13,8 @@ const AddCakePopUp = ({ setShowPopup, onCreate, prevFlavours, categoryId }) => {
   const [selectedFlavours, setSelectedFlavours] = useState(prevFlavours);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [cakeName, setCakeName] = useState("");
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const [rawImageSrc, setRawImageSrc] = useState(null);
   const navigate = useNavigate();
   const Url = import.meta.env.VITE_URL;
   useEffect(() => {
@@ -35,12 +38,21 @@ const AddCakePopUp = ({ setShowPopup, onCreate, prevFlavours, categoryId }) => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file && file.size < 1024 * 1024) {
-      setImageFile(file);
-      setPreview(URL.createObjectURL(file));
+      const objectUrl = URL.createObjectURL(file);
+      setRawImageSrc(objectUrl); // show editor
+      setShowEditPopup(true);
     } else {
       toast.error("File must be under 1MB");
     }
   };
+const handleSaveEditedImage = (blob) => {
+  const croppedFile = new File([blob], "cropped-image.jpg", {
+    type: "image/jpeg",
+  });
+  setImageFile(croppedFile);
+  setPreview(URL.createObjectURL(croppedFile));
+  setShowEditPopup(false);
+};
 
   const handleFlavourToggle = (flavourId) => {
     setSelectedFlavours((prev) =>
@@ -83,6 +95,14 @@ const AddCakePopUp = ({ setShowPopup, onCreate, prevFlavours, categoryId }) => {
 
   return (
     <div className="fixed inset-0 z-50 backdrop-filter backdrop-blur-2xl bg-opacity-70 flex items-center justify-center">
+      {showEditPopup && rawImageSrc && (
+        <EditImagePopUp
+          imageSrc={rawImageSrc}
+          onCancel={() => setShowEditPopup(false)}
+          onSave={handleSaveEditedImage}
+        />
+      )}
+
       <div className="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-6 w-96 max-w-full text-white relative shadow-2xl max-md:w-86 max-h-[90vh] custom-scroll overflow-y-auto">
         <button
           onClick={() => setShowPopup(false)}

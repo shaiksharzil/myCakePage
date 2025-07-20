@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import EditImagePopUp from "./EditImagePopUp";
 
 const EditCakePopUp = ({ cake, setShowPopup, onUpdate }) => {
   const [minQty, setMinQty] = useState("");
@@ -11,6 +12,8 @@ const EditCakePopUp = ({ cake, setShowPopup, onUpdate }) => {
   const [flavours, setFlavours] = useState([]);
   const [selectedFlavours, setSelectedFlavours] = useState([]);
   const [cakeName, setCakeName] = useState("");
+    const [showEditPopup, setShowEditPopup] = useState(false);
+    const [rawImageSrc, setRawImageSrc] = useState(null);
   const Url = import.meta.env.VITE_URL;
 
   useEffect(() => {
@@ -57,11 +60,20 @@ const EditCakePopUp = ({ cake, setShowPopup, onUpdate }) => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file && file.size < 1024 * 1024) {
-      setImage(file);
-      setPreview(URL.createObjectURL(file));
+      const objectUrl = URL.createObjectURL(file);
+      setRawImageSrc(objectUrl); // show editor
+      setShowEditPopup(true);
     } else {
       toast.error("File must be under 1MB");
     }
+  };
+  const handleSaveEditedImage = (blob) => {
+    const croppedFile = new File([blob], "cropped-image.jpg", {
+      type: "image/jpeg",
+    });
+    setImage(croppedFile);
+    setPreview(URL.createObjectURL(croppedFile));
+    setShowEditPopup(false);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -99,6 +111,13 @@ const EditCakePopUp = ({ cake, setShowPopup, onUpdate }) => {
 
   return (
     <div className="fixed inset-0 z-50 backdrop-filter backdrop-blur-2xl bg-opacity-70 flex items-center justify-center">
+      {showEditPopup && rawImageSrc && (
+        <EditImagePopUp
+          imageSrc={rawImageSrc}
+          onCancel={() => setShowEditPopup(false)}
+          onSave={handleSaveEditedImage}
+        />
+      )}
       <div className="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-6 w-96 max-w-full text-white relative shadow-2xl max-md:w-86 max-h-[90vh] custom-scroll overflow-y-auto">
         <button
           onClick={() => setShowPopup(false)}

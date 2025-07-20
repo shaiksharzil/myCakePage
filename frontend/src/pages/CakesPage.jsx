@@ -133,7 +133,6 @@ const CakesPage = () => {
       });
     }
 
-    // Final set
     setCakes(filteredCakes);
   };
 
@@ -157,7 +156,7 @@ const CakesPage = () => {
           </div>
           <div className="columns-1 columns-sm-custom-2 md:columns-3 lg:columns-4 gap-4">
             {cakes.map((cake) => (
-              <CakeCard key={cake._id} cake={cake} mobile={MobileNo} />
+              <CakeCard key={cake._id} cake={cake} mobile={MobileNo} categoryName={categoryName} />
             ))}
           </div>
         </div>

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-const OrderPopup = ({ cake, quantity, flavour, price, mobileNo, onClose }) => {
+const OrderPopup = ({ cake, quantity, flavour, price, mobileNo, onClose,category }) => {
   const [deliveryDate, setDeliveryDate] = useState("");
   const [deliveryTime, setDeliveryTime] = useState("");
   const [message, setMessage] = useState("");
   let cakeNameMess = "";
   const [messageOnCake, setMessageOnCake] = useState("");
-  if (cake.cakeName) cakeNameMess = `• cake Name: ${cake.cakeName}`;
+  if (cake.cakeName.trim()) cakeNameMess = `• cake Name: ${cake.cakeName}`;
   let messOnCake = "";
   let specReq = "";
   const [specialRequests, setSpecialRequests] = useState("");
@@ -20,18 +20,39 @@ const OrderPopup = ({ cake, quantity, flavour, price, mobileNo, onClose }) => {
       year: "numeric",
     });
   };
-
   const handleOrder = () => {
     if (!deliveryDate || !deliveryTime) {
       toast.error("Please fill in the required fields.");
       return;
     }
-    if (message) {
-      messOnCake = `🎁 Message on Cake: ${message}`;
+
+    const formattedDate = formatDate(deliveryDate);
+
+    // Construct text chunks for WhatsApp
+    const messOnCake = message ? `🎁 Message on Cake: ${message}` : "";
+    const specReq = specialRequests
+      ? `✨ Special Requests: ${specialRequests}`
+      : "";
+    const cakeNameMess = cake.cakeName?.trim()
+      ? `• Cake Name: ${cake.cakeName}`
+      : "";
+
+    // GA4 Custom Event Tracking (before redirect)
+    if (window.gtag) {
+      window.gtag("event", "order_via_whatsapp", {
+        category: category || "Unknown Category",
+        cake_name: cake?.cakeName?.trim() || "Unnamed Cake",
+        flavour,
+        quantity,
+        price,
+        delivery_date: formattedDate,
+        delivery_time: deliveryTime,
+        message_on_cake: message || "None",
+        special_requests: specialRequests || "None",
+        image_url: cake?.imageUrl || "No image",
+      });
     }
-    if (specialRequests) {
-      specReq = `✨ Special Requests: ${specialRequests}`;
-    }
+
     toast.promise(
       new Promise((resolve) => {
         setTimeout(() => {
@@ -39,14 +60,14 @@ const OrderPopup = ({ cake, quantity, flavour, price, mobileNo, onClose }) => {
 Hello! 🎂
 
 I would like to place an order for the following cake:
-
+• Category: ${category}
 ${cakeNameMess}
 • Flavour: ${flavour}
 • Quantity: ${quantity} kg
 • Total Price: ₹${price}/-
 
 ${messOnCake}
-📅 Delivery Date: ${formatDate(deliveryDate)}
+📅 Delivery Date: ${formattedDate}
 ⏰ Delivery Time: ${deliveryTime}
 ${specReq}
 
@@ -54,9 +75,11 @@ ${specReq}
 
 Please confirm my order. Thank you! 😊
 `;
+
           const whatsappURL = `https://wa.me/+91${mobileNo}?text=${encodeURIComponent(
             whatsappText
           )}`;
+
           window.open(whatsappURL, "_blank");
           resolve();
         }, 1200);
@@ -96,7 +119,10 @@ Please confirm my order. Thank you! 😊
         />
 
         <div className="flex flex-col mb-4">
-          {cake.cakeName ? (
+          <p className="text-white/70">
+            Category : <span className="font-medium">{category}</span>
+          </p>
+          {cake.cakeName.trim() ? (
             <p className="text-white/70">
               Cake Name: <span className="font-medium">{cake.cakeName}</span>
             </p>

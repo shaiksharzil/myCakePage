@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import OrderPopup from "../popups/OrderPopup";
 
-const CakeCard = ({ cake,mobile }) => {
+const CakeCard = ({ cake,mobile,categoryName }) => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -70,7 +70,7 @@ const CakeCard = ({ cake,mobile }) => {
           Minimum Order Quantity: {cake.minOrderQty}kg
         </p>
         {cake.cakeName ? (
-          <div className="text-white text-sm bg-white/10 w-fit px-1 rounded-md font-medium">
+          <div className="text-white text-sm bg-white/10 w-fit px-1 mb-2 rounded-md font-medium">
             {cake.cakeName}
           </div>
         ) : (
@@ -136,6 +136,8 @@ const CakeCard = ({ cake,mobile }) => {
           flavour={flavourDetails.name}
           price={calculatedPrice}
           mobileNo={mobile}
+          category={categoryName}
+
           onClose={() => setShowOrderPopup(false)}
         />
       )}
