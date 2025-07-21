@@ -61,7 +61,7 @@ const CakeCard = ({ cake,mobile,categoryName }) => {
         <div className="overflow-hidden mt-3 mb-1.5 rounded-xl text-center">
           <img
             loading="lazy"
-            className="object-cover cursor-zoom-in mx-auto transition-transform duration-300 ease-in-out hover:scale-120"
+            className="object-cover w-full cursor-zoom-in mx-auto transition-transform duration-300 ease-in-out hover:scale-120"
             src={cake.imageUrl}
             alt="Cake"
           />

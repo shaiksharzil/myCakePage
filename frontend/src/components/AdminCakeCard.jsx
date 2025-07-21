@@ -25,7 +25,7 @@ const AdminCakeCard = (props) => {
         <div className="overflow-hidden mt-3 mb-1.5 rounded-xl text-center">
           <img
             loading="lazy"
-            className="object-cover mx-auto cursor-zoom-in transition-transform duration-300 ease-in-out hover:scale-120"
+            className="object-cover w-full mx-auto cursor-zoom-in transition-transform duration-300 ease-in-out hover:scale-120"
             src={src}
             alt=""
           />

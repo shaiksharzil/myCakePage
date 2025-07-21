@@ -37,6 +37,7 @@ const AddCakePopUp = ({ setShowPopup, onCreate, prevFlavours, categoryId }) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    e.target.value = null;
     if (file && file.size < 1024 * 1024) {
       const objectUrl = URL.createObjectURL(file);
       setRawImageSrc(objectUrl); // show editor

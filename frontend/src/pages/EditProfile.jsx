@@ -77,6 +77,7 @@ const EditProfile = () => {
   };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    e.target.value = null;
     if (file && file.size < 1024 * 1024) {
       setImage(file);
       setImagePreview(URL.createObjectURL(file));
