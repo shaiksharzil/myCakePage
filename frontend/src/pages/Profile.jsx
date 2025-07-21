@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import SkeletonPublicProfileCard from "../loaders/SkeletonPublicProfileCard";
 import SkeletonPublicCakeCategory from "../loaders/SkeletonPublicCakeCategory";
 import NoCakeCategoriesPublic from "../components/NoCakeCategoriesPublic";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "react-helmet";
 
 const Profile = () => {
   const { customUrl } = useParams();
@@ -42,10 +42,18 @@ const Profile = () => {
       ) : (
         <>
           <Helmet>
-            <title>{profile?.bakeryName || "Bakery"} | MyCakePage</title>
+            <title>
+              {profile?.bakeryName
+                ? `${profile.bakeryName} | MyCakePage`
+                : "MyCakePage - Order Cakes Online"}
+            </title>
             <meta
               name="description"
-              content={`Order cakes online from ${profile?.bakeryName} in Mangalagiri. Delicious cakes, easy ordering, and quick delivery.`}
+              content={
+                profile?.bakeryName
+                  ? `Order cakes online from ${profile.bakeryName} in Mangalagiri. Delicious cakes, easy ordering, and quick delivery.`
+                  : "Order birthday cakes, wedding cakes, and more from your local bakeries via MyCakePage. Fast delivery and full customization."
+              }
             />
             <meta
               name="keywords"

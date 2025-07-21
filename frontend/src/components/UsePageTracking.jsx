@@ -14,7 +14,7 @@ const usePageTracking = () => {
     });
   }, [location]);
 
-  return null; // nothing is rendered
+  return null;
 };
 
 export default usePageTracking;
