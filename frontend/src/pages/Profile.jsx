@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import SkeletonPublicProfileCard from "../loaders/SkeletonPublicProfileCard";
 import SkeletonPublicCakeCategory from "../loaders/SkeletonPublicCakeCategory";
 import NoCakeCategoriesPublic from "../components/NoCakeCategoriesPublic";
+import { Helmet } from "react-helmet-async";
 
 const Profile = () => {
   const { customUrl } = useParams();
@@ -40,6 +41,21 @@ const Profile = () => {
         </>
       ) : (
         <>
+          <Helmet>
+            <title>{profile?.bakeryName || "Bakery"} | MyCakePage</title>
+            <meta
+              name="description"
+              content={`Order cakes online from ${profile?.bakeryName} in Mangalagiri. Delicious cakes, easy ordering, and quick delivery.`}
+            />
+            <meta
+              name="keywords"
+              content="ravi sweets, ravi sweets and bakery, ravi bakery, ravi cakes, ravi cake shop, ravi cakes mangalagiri, ravi sweets mangalagiri, ravi bakery mangalagiri, birthday cakes ravi bakery, custom cakes ravi, best bakery in mangalagiri, top cake shop mangalagiri, eggless cakes mangalagiri, chocolate cake ravi bakery, mangalagiri cakes, mangalagiri bakeries, online cake order mangalagiri, cake delivery mangalagiri, wedding cakes mangalagiri, kids cakes mangalagiri, cool cakes mangalagiri, affordable cakes mangalagiri, local bakery mangalagiri,mycakepage, my cake page, cakepage, cake page online, cake profile page, mycakepage.com"
+            />
+            <link
+              rel="canonical"
+              href={`https://mycakepage.vercel.app/${customUrl}`}
+            />
+          </Helmet>
           <PublicProfileCard profile={profile} />
           {categories.length === 0 ? (
             <NoCakeCategoriesPublic />

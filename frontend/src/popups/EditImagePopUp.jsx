@@ -55,38 +55,43 @@ const EditImagePopUp = ({ imageSrc, onCancel, onSave }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center px-2">
-      <div className="bg-zinc-900 text-white rounded-xl p-6 w-96 max-w-4xl shadow-2xl">
-        <h2 className="text-lg font-semibold mb-4">Crop Your Cake</h2>
+    <div className="flex justify-center items-center fixed inset-0 bg-black/90 z-50 px-4">
+      <div className="bg-zinc-900 rounded-xl w-full max-w-[420px] max-h-[90vh] p-4 flex flex-col">
+        <h2 className="text-white text-lg font-semibold mb-3 text-center">
+          Crop Your Cake
+        </h2>
 
-        <div className="flex justify-center items-start bg-zinc-800 p-4 rounded-md h-[70vh] overflow-y-auto border border-zinc-700">
-          <ReactCrop
-            crop={crop}
-            onChange={(newCrop) => setCrop(newCrop)}
-            onComplete={(c) => setCompletedCrop(c)}
-            aspect={undefined}
-            keepSelection={true}
-          >
-            <img
-              src={imageSrc}
-              onLoad={(e) => onImageLoad(e.target)}
-              alt="To crop"
-              className="h-auto max-h-none object-contain"
-            />
-          </ReactCrop>
+        <div className="flex-1 overflow-hidden">
+          <div className="w-full h-full flex justify-center items-center">
+            <ReactCrop
+              crop={crop}
+              onChange={(newCrop) => setCrop(newCrop)}
+              onComplete={(c) => setCompletedCrop(c)}
+              aspect={undefined}
+              keepSelection={true}
+              className="max-w-full max-h-[70vh]"
+            >
+              <img
+                src={imageSrc}
+                onLoad={(e) => onImageLoad(e.target)}
+                alt="To crop"
+                className="max-w-full max-h-[70vh] object-contain"
+              />
+            </ReactCrop>
+          </div>
         </div>
-        <canvas ref={previewCanvasRef} className="hidden"></canvas>
+        <canvas ref={previewCanvasRef} className="hidden" />
 
-        <div className="flex justify-end gap-3 mt-6">
+        <div className="flex justify-between mt-4 gap-4">
           <button
             onClick={onCancel}
-            className="px-4 py-2 bg-zinc-700 cursor-pointer text-white rounded hover:bg-zinc-600"
+            className="flex-1 py-2 bg-zinc-700 text-white rounded hover:bg-zinc-600"
           >
             Cancel
           </button>
           <button
             onClick={getCroppedImage}
-            className="px-4 py-2 bg-emerald-500 text-white rounded cursor-pointer hover:bg-emerald-600"
+            className="flex-1 py-2 bg-emerald-500 text-white rounded hover:bg-emerald-600"
           >
             Confirm
           </button>
