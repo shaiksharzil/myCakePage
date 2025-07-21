@@ -11,7 +11,7 @@ const Footer = () => {
 
   return (
     <footer className="border-t-2 border-white/10 w-full text-white mt-5">
-      <p className="text-center mt-2 max-md:text-sm">
+      <p className="text-center mt-2 max-sm:text-sm">
         &copy; {new Date().getFullYear()}{" "}
         <Link to={"/"}
           style={{ fontFamily: "Alagen" }}
@@ -21,7 +21,7 @@ const Footer = () => {
         </Link>{" "}
         — Made with ❤️ for cake lovers.
       </p>
-      <p className="text-center mt-2">
+      <p className="text-center mt-2 max-sm:text-sm">
         Designed & Developed By{" "}
         <a
           href="https://shaik-sharzil.netlify.app/"

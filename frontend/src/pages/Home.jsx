@@ -151,7 +151,7 @@ const Home = () => {
                 to="/signup"
                 className="fancy-button border border-white px-2 break-inside-avoid py-2 ml-1 rounded-md"
               >
-                <span className="font-semibold">Claim CakePage</span>
+                <span className="font-semibold">Get CakePage</span>
               </Link>
             </div>
             {urlError && <p className="text-sm  text-red-400">{urlError}</p>}
@@ -230,9 +230,10 @@ const Home = () => {
               <h3 className="text-xl font-semibold mb-2">For Customers</h3>
               <ul className="list-disc list-inside max-sm:text-xs text-white/70 space-y-1">
                 <li>Browse beautiful cakes by category</li>
-                <li>Sort cakes by minimum order quantity</li>
+                <li>Filter by quantity range (e.g., 0.5kg to 5kg)</li>
+                <li>Filter by cake flavours (e.g., chocolate, vanilla, etc.)</li>
+                <li>Sort cakes by price, quantity, or newest first</li>
                 <li>View dynamic pricing per cake and per kg</li>
-                <li>Fill custom order form with delivery details</li>
                 <li>Include optional message or cake notes</li>
                 <li>Order instantly via WhatsApp</li>
               </ul>
